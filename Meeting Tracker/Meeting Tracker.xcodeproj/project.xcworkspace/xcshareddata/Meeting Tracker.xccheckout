@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>07A57F26-0D4E-47BC-8B88-EFFB7E16147A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Meeting Tracker</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>141B824C-11E5-43E6-8AE6-5C99B86D84A1</key>
+		<string>ssh://github.com/jsorge/02-Meeting-Tracker-1.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Meeting Tracker/Meeting Tracker.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>141B824C-11E5-43E6-8AE6-5C99B86D84A1</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/jsorge/02-Meeting-Tracker-1.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>141B824C-11E5-43E6-8AE6-5C99B86D84A1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>141B824C-11E5-43E6-8AE6-5C99B86D84A1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>02-Meeting Tracker 1</string>
+		</dict>
+	</array>
+</dict>
+</plist>
