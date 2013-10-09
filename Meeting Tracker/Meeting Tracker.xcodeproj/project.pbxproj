@@ -18,6 +18,8 @@
 		93A687D51804F15F00232901 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A687B41804F15F00232901 /* Cocoa.framework */; };
 		93A687DD1804F15F00232901 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A687DB1804F15F00232901 /* InfoPlist.strings */; };
 		93A687DF1804F15F00232901 /* Meeting_TrackerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A687DE1804F15F00232901 /* Meeting_TrackerTests.m */; };
+		93A687EA1804F19400232901 /* testMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A687E81804F19400232901 /* testMeeting.m */; };
+		93A687EB1804F19400232901 /* testPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A687E91804F19400232901 /* testPerson.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		93A687DA1804F15F00232901 /* Meeting TrackerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Meeting TrackerTests-Info.plist"; sourceTree = "<group>"; };
 		93A687DC1804F15F00232901 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93A687DE1804F15F00232901 /* Meeting_TrackerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Meeting_TrackerTests.m; sourceTree = "<group>"; };
+		93A687E81804F19400232901 /* testMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testMeeting.m; sourceTree = "<group>"; };
+		93A687E91804F19400232901 /* testPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testPerson.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				93A687DE1804F15F00232901 /* Meeting_TrackerTests.m */,
+				93A687E81804F19400232901 /* testMeeting.m */,
+				93A687E91804F19400232901 /* testPerson.m */,
 				93A687D91804F15F00232901 /* Supporting Files */,
 			);
 			path = "Meeting TrackerTests";
@@ -263,6 +269,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				93A687DF1804F15F00232901 /* Meeting_TrackerTests.m in Sources */,
+				93A687EB1804F19400232901 /* testPerson.m in Sources */,
+				93A687EA1804F19400232901 /* testMeeting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
