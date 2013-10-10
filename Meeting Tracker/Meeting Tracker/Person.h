@@ -15,8 +15,6 @@
 }
 
 #pragma mark - Accessors
-- (NSString *)description;
-
 - (NSString *)name;
 - (void)setName:(NSString *)aParticipantName;
 

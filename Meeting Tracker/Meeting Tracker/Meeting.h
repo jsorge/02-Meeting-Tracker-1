@@ -16,8 +16,6 @@
 }
 
 #pragma mark - Accessors
-- (NSString *)description;
-
 - (NSDate *)startingTime;
 - (void)setStartingTime:(NSDate *)aStartingTime;
 

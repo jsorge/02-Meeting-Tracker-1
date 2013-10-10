@@ -10,7 +10,7 @@
 #import "Meeting.h"
 #import "Person.h"
 
-@interface JMSDocument : NSDocument <NSWindowDelegate>
+@interface MeetingDocument : NSDocument <NSWindowDelegate>
 {
     Meeting *_meeting;
     NSTimer *_timer;
@@ -29,6 +29,5 @@
 - (IBAction)logMeeting:(id)sender;
 - (IBAction)logParticipants:(id)sender;
 - (void)updateGUI:(NSTimer *)theTimer;
-- (void)windowWillClose:(NSNotification *)notification;
 
 @end

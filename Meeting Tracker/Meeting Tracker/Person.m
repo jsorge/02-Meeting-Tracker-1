@@ -13,7 +13,7 @@
 #pragma mark - Accessors
 - (NSString *)description;
 {
-    return [self name];
+    return [NSString stringWithFormat:@"%@ bills at %f", [self name], [[self hourlyRate] doubleValue]];
 }
 
 - (NSString *)name;

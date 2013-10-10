@@ -13,8 +13,8 @@
 		93A688031804F24400232901 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A688011804F24400232901 /* InfoPlist.strings */; };
 		93A688051804F24400232901 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A688041804F24400232901 /* main.m */; };
 		93A688091804F24400232901 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 93A688071804F24400232901 /* Credits.rtf */; };
-		93A6880C1804F24400232901 /* JMSDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A6880B1804F24400232901 /* JMSDocument.m */; };
-		93A6880F1804F24400232901 /* JMSDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A6880D1804F24400232901 /* JMSDocument.xib */; };
+		93A6880C1804F24400232901 /* MeetingDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A6880B1804F24400232901 /* MeetingDocument.m */; };
+		93A6880F1804F24400232901 /* MeetingDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A6880D1804F24400232901 /* MeetingDocument.xib */; };
 		93A688121804F24400232901 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A688101804F24400232901 /* MainMenu.xib */; };
 		93A688141804F24400232901 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A688131804F24400232901 /* Images.xcassets */; };
 		93A6881B1804F24400232901 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A6881A1804F24400232901 /* XCTest.framework */; };
@@ -50,9 +50,9 @@
 		93A688041804F24400232901 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		93A688061804F24400232901 /* Meeting Tracker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Meeting Tracker-Prefix.pch"; sourceTree = "<group>"; };
 		93A688081804F24400232901 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		93A6880A1804F24400232901 /* JMSDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMSDocument.h; sourceTree = "<group>"; };
-		93A6880B1804F24400232901 /* JMSDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JMSDocument.m; sourceTree = "<group>"; };
-		93A6880E1804F24400232901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/JMSDocument.xib; sourceTree = "<group>"; };
+		93A6880A1804F24400232901 /* MeetingDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingDocument.h; sourceTree = "<group>"; };
+		93A6880B1804F24400232901 /* MeetingDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingDocument.m; sourceTree = "<group>"; };
+		93A6880E1804F24400232901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MeetingDocument.xib; sourceTree = "<group>"; };
 		93A688111804F24400232901 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		93A688131804F24400232901 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		93A688191804F24400232901 /* Meeting TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meeting TrackerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,8 +88,8 @@
 		938B60BC1804F7EB0036CDAC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				93A6880A1804F24400232901 /* JMSDocument.h */,
-				93A6880B1804F24400232901 /* JMSDocument.m */,
+				93A6880A1804F24400232901 /* MeetingDocument.h */,
+				93A6880B1804F24400232901 /* MeetingDocument.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -138,7 +138,7 @@
 			children = (
 				93A688391804F36500232901 /* Model */,
 				938B60BC1804F7EB0036CDAC /* Controller */,
-				93A6880D1804F24400232901 /* JMSDocument.xib */,
+				93A6880D1804F24400232901 /* MeetingDocument.xib */,
 				93A688101804F24400232901 /* MainMenu.xib */,
 				93A688131804F24400232901 /* Images.xcassets */,
 				93A687FF1804F24400232901 /* Supporting Files */,
@@ -268,7 +268,7 @@
 			files = (
 				93A688031804F24400232901 /* InfoPlist.strings in Resources */,
 				93A688141804F24400232901 /* Images.xcassets in Resources */,
-				93A6880F1804F24400232901 /* JMSDocument.xib in Resources */,
+				93A6880F1804F24400232901 /* MeetingDocument.xib in Resources */,
 				93A688091804F24400232901 /* Credits.rtf in Resources */,
 				93A688121804F24400232901 /* MainMenu.xib in Resources */,
 			);
@@ -292,7 +292,7 @@
 				93A688051804F24400232901 /* main.m in Sources */,
 				938B60C118050E010036CDAC /* Meeting.m in Sources */,
 				938B60C218050E010036CDAC /* Person.m in Sources */,
-				93A6880C1804F24400232901 /* JMSDocument.m in Sources */,
+				93A6880C1804F24400232901 /* MeetingDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,12 +333,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		93A6880D1804F24400232901 /* JMSDocument.xib */ = {
+		93A6880D1804F24400232901 /* MeetingDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				93A6880E1804F24400232901 /* Base */,
 			);
-			name = JMSDocument.xib;
+			name = MeetingDocument.xib;
 			sourceTree = "<group>";
 		};
 		93A688101804F24400232901 /* MainMenu.xib */ = {

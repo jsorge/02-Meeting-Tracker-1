@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 jsorge. All rights reserved.
 //
 
-#import "JMSDocument.h"
+#import "MeetingDocument.h"
 
-@implementation JMSDocument
+@implementation MeetingDocument
 
 - (id)init
 {
@@ -23,7 +23,7 @@
 {
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"JMSDocument";
+    return @"MeetingDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController

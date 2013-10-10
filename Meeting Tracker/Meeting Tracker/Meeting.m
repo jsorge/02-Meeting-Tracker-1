@@ -14,7 +14,7 @@
 #pragma mark - Accessors
 - (NSString *)description;
 {
-    return @"";
+    return [NSString stringWithFormat:@"This is a meeting that started at %@", [self startingTime]];
 }
 
 - (NSDate *)startingTime;
@@ -106,6 +106,7 @@
     self = [super init];
     if (self) {
         [self setPersonsPresent:[NSMutableArray array]];
+        [self setStartingTime:[NSDate date]];
     }
     return self;
 }

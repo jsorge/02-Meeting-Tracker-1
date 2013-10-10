@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="JMSDocument">
+        <customObject id="-2" userLabel="File's Owner" customClass="MeetingDocument">
             <connections>
                 <outlet property="timerLabel" destination="6eu-Qp-0pk" id="K8Z-mM-pMw"/>
                 <outlet property="window" destination="5" id="18"/>
