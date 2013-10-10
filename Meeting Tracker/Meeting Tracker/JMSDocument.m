@@ -56,4 +56,54 @@
     return YES;
 }
 
+#pragma mark - Accessors
+- (Meeting *)meeting;
+{
+    return _meeting;
+}
+
+- (void)setMeeting:(Meeting *)aMeeting;
+{
+    if (_meeting != aMeeting) {
+        [aMeeting retain];
+        [_meeting release];
+        _meeting = aMeeting;
+    }
+}
+
+- (NSTimer *)timer;
+{
+    return _timer;
+}
+
+- (void)setTimer:(NSTimer *)aTimer;
+{
+    if (_timer != aTimer) {
+        [aTimer retain];
+        [_timer release];
+        _timer = aTimer;
+    }
+}
+
+#pragma mark - Other Public Methods
+- (IBAction)logMeeting:(id)sender;
+{
+    
+}
+
+- (IBAction)logParticipants:(id)sender;
+{
+    
+}
+
+- (void)updateGUI:(NSTimer *)theTimer;
+{
+    
+}
+
+- (void)windowWillClose:(NSNotification *)notification;
+{
+    
+}
+
 @end

@@ -10,7 +10,6 @@
 
 @interface Meeting : NSObject
 {
-    NSString *_description;
     NSDate *_startingTime;
     NSDate *_endingTime;
     NSMutableArray *_personsPresent;
@@ -30,10 +29,14 @@
 
 #pragma mark - Constructors
 + (Meeting *)meetingWithStooges;
++ (Meeting *)meetingWithCaptains;
++ (Meeting *)meetingWithMarxBrothers;
 
 #pragma mark - Other Public Methods
 - (void)addToPersonsPresent:(id)personsPresentObject;
 - (void)removeFromPersonsPresent:(id)personsPresentObject;
+- (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx;
+- (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx;
 - (NSUInteger)countOfPersonsPresent;
 - (NSUInteger)elapsedSeconds;
 - (double)elapsedHours;

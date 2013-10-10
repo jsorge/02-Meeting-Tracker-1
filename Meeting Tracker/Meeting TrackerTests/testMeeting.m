@@ -71,19 +71,19 @@
     Meeting *meeting;
     meeting = [[[Meeting alloc] init] autorelease];
     
-    Person *groucho = [Person personWithName:@"Groucho" hourlyRate:85.];
+    Person *groucho = [Person personWithName:@"Groucho" hourlyRate:@85.];
     [meeting insertObject:groucho
   inPersonsPresentAtIndex:0];
-    [meeting insertObject:[Person personWithName:@"Harpo" hourlyRate:75.]
+    [meeting insertObject:[Person personWithName:@"Harpo" hourlyRate:@75.]
   inPersonsPresentAtIndex:0];
-    [meeting insertObject:[Person personWithName:@"Chico" hourlyRate:65.]
+    [meeting insertObject:[Person personWithName:@"Chico" hourlyRate:@65.]
   inPersonsPresentAtIndex:0];
-    Person *zeppo = [Person personWithName:@"Zeppo" hourlyRate:55.];
+    Person *zeppo = [Person personWithName:@"Zeppo" hourlyRate:@55.];
     [meeting insertObject:zeppo
   inPersonsPresentAtIndex:0];
-        [meeting insertObject:[Person personWithName:@"Gummo" hourlyRate:45.]
+        [meeting insertObject:[Person personWithName:@"Gummo" hourlyRate:@45.]
   inPersonsPresentAtIndex:0];
-        [meeting insertObject:[Person personWithName:@"Karl" hourlyRate:0.]
+        [meeting insertObject:[Person personWithName:@"Karl" hourlyRate:@0.]
   inPersonsPresentAtIndex:0];
     NSLog(@"%@ %@", meeting, [meeting personsPresent]);
     NSUInteger expectedCount = 6;
@@ -113,9 +113,9 @@
     [meeting setStartingTime:start];
     [meeting setEndingTime:end];
 
-    [meeting insertObject:[Person personWithName:@"Groucho" hourlyRate:85.]
+    [meeting insertObject:[Person personWithName:@"Groucho" hourlyRate:@85.]
   inPersonsPresentAtIndex:0];
-    [meeting insertObject:[Person personWithName:@"Harpo" hourlyRate:75.]
+    [meeting insertObject:[Person personWithName:@"Harpo" hourlyRate:@75.]
   inPersonsPresentAtIndex:0];
 
     // both of the expected values are hand computed

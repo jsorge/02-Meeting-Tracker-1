@@ -10,7 +10,6 @@
 
 @interface Person : NSObject
 {
-    NSString *_description;
     NSString *_name;
     NSNumber *_hourlyRate;
 }
@@ -26,6 +25,6 @@
 
 #pragma mark - Constructors
 + (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
-- (id)initWithName:(NSString *)name hourlyRate:(double)rate;
+- (id)initWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
 
 @end

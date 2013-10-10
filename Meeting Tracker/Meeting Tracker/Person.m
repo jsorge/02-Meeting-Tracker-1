@@ -13,7 +13,7 @@
 #pragma mark - Accessors
 - (NSString *)description;
 {
-    return _description;
+    return [self name];
 }
 
 - (NSString *)name;
@@ -24,9 +24,8 @@
 - (void)setName:(NSString *)aParticipantName;
 {
     if (aParticipantName != _name) {
-        [aParticipantName retain];
         [_name release];
-        _name = aParticipantName;
+        _name = [aParticipantName copy];
     }
 }
 
@@ -47,23 +46,18 @@
 #pragma mark - Constructors
 + (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
 {
-    return [[[Person alloc] initWithName:name hourlyRate:[rate doubleValue]] autorelease];
+    return [[[Person alloc] initWithName:name hourlyRate:rate] autorelease];
 }
 
-- (id)initWithName:(NSString *)name hourlyRate:(double)rate;
+- (id)initWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
 {
     self = [super init];
     if (self) {
         [self setName:name];
-        [self setHourlyRate:@(rate)];
+        [self setHourlyRate:rate];
     }
     return self;
 }
-
-//- (id)init
-//{
-//    return [self initWithName:nil hourlyRate:nil];
-//}
 
 #pragma mark - Dealloc
 - (void)dealloc

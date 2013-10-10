@@ -64,7 +64,7 @@
 - (void)testPersonWithNameRate
 {
     Person *groucho = [Person personWithName:grouchoString
-                                  hourlyRate:85.];
+                                  hourlyRate:@85.];
     XCTAssertEqualObjects(grouchoString, [groucho name], @"name wrong");
     XCTAssertEqualWithAccuracy(85., [[groucho hourlyRate] doubleValue], .001, @"hourly rate wrong");
 }
