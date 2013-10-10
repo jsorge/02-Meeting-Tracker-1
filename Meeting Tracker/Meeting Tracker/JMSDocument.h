@@ -15,6 +15,7 @@
     Meeting *_meeting;
     NSTimer *_timer;
 }
+@property (assign) IBOutlet NSTextField *timerLabel;
 
 #pragma mark - Accessors
 - (Meeting *)meeting;

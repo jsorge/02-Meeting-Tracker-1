@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        // Add your subclass-specific initialization here.
+        [self setMeeting:[Meeting meetingWithCaptains]];
     }
     return self;
 }
@@ -88,12 +88,15 @@
 #pragma mark - Other Public Methods
 - (IBAction)logMeeting:(id)sender;
 {
-    
+    NSLog(@"%@", [[self meeting] description]);
 }
 
 - (IBAction)logParticipants:(id)sender;
 {
-    
+    NSArray *meetingParticipants = [[self meeting] personsPresent];
+    for (Person *attendee in meetingParticipants) {
+        NSLog(@"%@", [attendee description]);
+    }
 }
 
 - (void)updateGUI:(NSTimer *)theTimer;
@@ -101,6 +104,7 @@
     
 }
 
+#pragma mark - NSWindowDelegate
 - (void)windowWillClose:(NSNotification *)notification;
 {
     
