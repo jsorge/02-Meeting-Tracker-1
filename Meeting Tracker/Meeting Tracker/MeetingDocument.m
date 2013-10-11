@@ -14,7 +14,20 @@
 {
     self = [super init];
     if (self) {
-        [self setMeeting:[Meeting meetingWithCaptains]];
+        NSUInteger random = arc4random_uniform(3);
+        switch (random) {
+            case 0:
+                [self setMeeting:[Meeting meetingWithCaptains]];
+                break;
+            case 1:
+                [self setMeeting:[Meeting meetingWithMarxBrothers]];
+                break;
+            case 2:
+                [self setMeeting:[Meeting meetingWithStooges]];
+                break;
+            default:
+                NSLog(@"No meeting was started because the random number was %lu", (unsigned long)random);
+        }
     }
     return self;
 }
@@ -30,6 +43,7 @@
 {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
+    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
 }
 
 + (BOOL)autosavesInPlace
@@ -101,13 +115,25 @@
 
 - (void)updateGUI:(NSTimer *)theTimer;
 {
-    
+    [[self currentTimeLabel] setObjectValue:[NSDate date]];
 }
 
 #pragma mark - NSWindowDelegate
 - (void)windowWillClose:(NSNotification *)notification;
 {
+    [[self timer] invalidate];
+}
+
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [_timer release];
+    _timer = nil;
     
+    [_meeting release];
+    _meeting = nil;
+    
+    [super dealloc];
 }
 
 @end

@@ -59,7 +59,7 @@
     return self;
 }
 
-#pragma mark - Dealloc
+#pragma mark - Memory Management
 - (void)dealloc
 {
     [_name release];

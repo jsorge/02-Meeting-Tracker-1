@@ -18,10 +18,8 @@
 #pragma mark - Accessors
 - (NSDate *)startingTime;
 - (void)setStartingTime:(NSDate *)aStartingTime;
-
 - (NSDate *)endingTime;
 - (void)setEndingTime:(NSDate *)anEndingTime;
-
 - (NSMutableArray *)personsPresent;
 - (void)setPersonsPresent:(NSMutableArray *)aPersonsPresent;
 

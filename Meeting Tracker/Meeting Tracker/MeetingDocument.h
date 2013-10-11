@@ -15,12 +15,12 @@
     Meeting *_meeting;
     NSTimer *_timer;
 }
-@property (assign) IBOutlet NSTextField *timerLabel;
+
+@property (assign) IBOutlet NSTextField *currentTimeLabel;
 
 #pragma mark - Accessors
 - (Meeting *)meeting;
 - (void)setMeeting:(Meeting *)aMeeting;
-
 - (NSTimer *)timer;
 - (void)setTimer:(NSTimer *)aTimer;
 

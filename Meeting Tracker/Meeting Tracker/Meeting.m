@@ -178,4 +178,19 @@
     return @(totalRate);
 }
 
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [_startingTime release];
+    _startingTime = nil;
+    
+    [_endingTime release];
+    _endingTime = nil;
+    
+    [_personsPresent release];
+    _personsPresent = nil;
+    
+    [super dealloc];
+}
+
 @end

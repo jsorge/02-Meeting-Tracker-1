@@ -17,7 +17,6 @@
 #pragma mark - Accessors
 - (NSString *)name;
 - (void)setName:(NSString *)aParticipantName;
-
 - (NSNumber *)hourlyRate;
 - (void)setHourlyRate:(NSNumber *)anHourlyRate;
 
