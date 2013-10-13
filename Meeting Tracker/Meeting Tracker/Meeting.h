@@ -13,6 +13,7 @@
     NSDate *_startingTime;
     NSDate *_endingTime;
     NSMutableArray *_personsPresent;
+    NSNumberFormatter *_currencyFormatter;
 }
 
 #pragma mark - Accessors
@@ -22,6 +23,7 @@
 - (void)setEndingTime:(NSDate *)anEndingTime;
 - (NSMutableArray *)personsPresent;
 - (void)setPersonsPresent:(NSMutableArray *)aPersonsPresent;
+- (NSNumberFormatter *)currencyFormatter;
 
 #pragma mark - Constructors
 + (Meeting *)meetingWithStooges;

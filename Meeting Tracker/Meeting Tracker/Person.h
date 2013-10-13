@@ -12,6 +12,7 @@
 {
     NSString *_name;
     NSNumber *_hourlyRate;
+    NSNumberFormatter *_currencyFormatter;
 }
 
 #pragma mark - Accessors
@@ -19,6 +20,7 @@
 - (void)setName:(NSString *)aParticipantName;
 - (NSNumber *)hourlyRate;
 - (void)setHourlyRate:(NSNumber *)anHourlyRate;
+- (NSNumberFormatter *)currencyFormatter; 
 
 #pragma mark - Constructors
 + (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate;

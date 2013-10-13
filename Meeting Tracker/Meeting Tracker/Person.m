@@ -13,7 +13,7 @@
 #pragma mark - Accessors
 - (NSString *)description;
 {
-    return [NSString stringWithFormat:@"%@ bills at %f", [self name], [[self hourlyRate] doubleValue]];
+    return [NSString stringWithFormat:@"%@ bills at %@", [self name], [[self currencyFormatter] stringFromNumber:[self hourlyRate]]];
 }
 
 - (NSString *)name;
@@ -43,6 +43,15 @@
     }
 }
 
+- (NSNumberFormatter *)currencyFormatter
+{
+    if (!_currencyFormatter) {
+        _currencyFormatter = [[[NSNumberFormatter alloc] init] retain];
+        [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    }
+    return _currencyFormatter;
+}
+
 #pragma mark - Constructors
 + (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
 {
@@ -67,6 +76,9 @@
     
     [_hourlyRate release];
     _hourlyRate = nil;
+    
+    [_currencyFormatter release];
+    _currencyFormatter = nil;
     
     [super dealloc];
 }

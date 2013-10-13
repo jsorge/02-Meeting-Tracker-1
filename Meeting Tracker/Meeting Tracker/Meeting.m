@@ -14,7 +14,7 @@
 #pragma mark - Accessors
 - (NSString *)description;
 {
-    return [NSString stringWithFormat:@"This is a meeting that started at %@", [self startingTime]];
+    return [NSString stringWithFormat:@"This is a meeting that started at %@ with %lu participants billing at %@/hour", [self startingTime], (unsigned long)[self countOfPersonsPresent], [[self currencyFormatter] stringFromNumber:[self totalBillingRate]]];
 }
 
 - (NSDate *)startingTime;
@@ -57,6 +57,15 @@
         [_personsPresent release];
         _personsPresent = aPersonsPresent;
     }
+}
+
+- (NSNumberFormatter *)currencyFormatter
+{
+    if (!_currencyFormatter) {
+        _currencyFormatter = [[[NSNumberFormatter alloc] init] retain];
+        [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    }
+    return _currencyFormatter;
 }
 
 #pragma mark - Constructors
@@ -189,6 +198,9 @@
     
     [_personsPresent release];
     _personsPresent = nil;
+    
+    [_currencyFormatter release];
+    _currencyFormatter = nil;
     
     [super dealloc];
 }
