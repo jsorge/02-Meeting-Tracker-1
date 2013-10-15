@@ -149,7 +149,12 @@
 - (NSUInteger)elapsedSeconds;
 {
     NSDate *startingTime = [self startingTime];
-    NSDate *endingTime = [self endingTime];
+    NSDate *endingTime;
+    if (![self endingTime]) {
+        endingTime = [NSDate date];
+    } else {
+        endingTime = [self endingTime];
+    }
     NSTimeInterval timeSinceMeetingStarted = [endingTime timeIntervalSinceDate:startingTime];
     return timeSinceMeetingStarted;
 }
