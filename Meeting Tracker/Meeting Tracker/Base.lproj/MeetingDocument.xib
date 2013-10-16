@@ -7,7 +7,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MeetingDocument">
             <connections>
+                <outlet property="accruedCostLabel" destination="nai-AQ-YNI" id="YdM-sG-b1v"/>
                 <outlet property="currentTimeLabel" destination="6eu-Qp-0pk" id="6me-XV-6i5"/>
+                <outlet property="elapsedTimeLabel" destination="osc-dT-7Yd" id="XUe-Gv-5s3"/>
+                <outlet property="endMeetingButton" destination="CGB-92-Lzl" id="aI2-jb-zLL"/>
+                <outlet property="startMeetingButton" destination="OD0-gJ-1KW" id="9Gx-l8-hH8"/>
                 <outlet property="timerLabel" destination="6eu-Qp-0pk" id="K8Z-mM-pMw"/>
                 <outlet property="window" destination="5" id="18"/>
             </connections>
@@ -62,14 +66,20 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="startMeetingButton:" target="-2" id="vYc-MV-o06"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CGB-92-Lzl">
                         <rect key="frame" x="14" y="378" width="124" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="End Meeting" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LV5-xY-ohk">
+                        <buttonCell key="cell" type="push" title="End Meeting" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LV5-xY-ohk">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="endMeetingButton:" target="-2" id="yhF-Wi-RyC"/>
+                        </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WQd-vX-nH8">
                         <rect key="frame" x="140" y="422" width="120" height="17"/>
@@ -79,6 +89,9 @@
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="self.meeting.startingTime" id="F9M-ec-vAm"/>
+                        </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q2Q-b0-No5">
                         <rect key="frame" x="140" y="385" width="120" height="17"/>
@@ -120,6 +133,12 @@
                         <rect key="frame" x="503" y="397" width="84" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="$0.00" id="h60-ik-uVI">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="¤#,##0.00" negativeFormat="(¤#,##0.00)" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" positivePrefix="$" negativePrefix="($" negativeSuffix=")" id="eMb-d2-Zd2">
+                                <real key="roundingIncrement" value="0.0"/>
+                                <metadata>
+                                    <bool key="localizesFormat" value="YES"/>
+                                </metadata>
+                            </numberFormatter>
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -145,6 +164,7 @@
                         </buttonCell>
                         <connections>
                             <action selector="remove:" target="SfF-lx-BgS" id="Wi1-4a-WHw"/>
+                            <binding destination="SfF-lx-BgS" name="enabled" keyPath="canRemove" id="Fwb-hb-kQX"/>
                         </connections>
                     </button>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xwM-S7-mzj">
@@ -171,11 +191,11 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <connections>
-                                                    <binding destination="SfF-lx-BgS" name="value" keyPath="arrangedObjects.name" id="YMd-1s-4dJ"/>
-                                                </connections>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="SfF-lx-BgS" name="value" keyPath="arrangedObjects.name" id="uyw-aE-y0L"/>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn width="342" minWidth="40" maxWidth="1000" id="zaI-VL-fpk">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Rate">
@@ -184,14 +204,21 @@
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
                                             <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="VcQ-Ec-kOs">
+                                                <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="¤#,##0.00" negativeFormat="(¤#,##0.00)" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" positivePrefix="$" negativePrefix="($" negativeSuffix=")" id="pzM-g8-ibN">
+                                                    <real key="roundingIncrement" value="0.0"/>
+                                                    <metadata>
+                                                        <bool key="localizesFormat" value="YES"/>
+                                                        <real key="inspectorSampleValue" value="1"/>
+                                                    </metadata>
+                                                </numberFormatter>
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <connections>
-                                                    <binding destination="SfF-lx-BgS" name="value" keyPath="arrangedObjects.hourlyRate" id="If7-n8-axQ"/>
-                                                </connections>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="SfF-lx-BgS" name="value" keyPath="arrangedObjects.hourlyRate" id="VGP-V6-BTT"/>
+                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                 </tableView>
@@ -202,7 +229,7 @@
                             <rect key="frame" x="1" y="1" width="0.0" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" id="6OU-dc-sDa">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" id="6OU-dc-sDa">
                             <rect key="frame" x="-15" y="17" width="16" height="0.0"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>

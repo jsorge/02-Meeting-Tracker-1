@@ -25,9 +25,13 @@
 - (void)setTimer:(NSTimer *)aTimer;
 
 
-#pragma mark - Other Public Methods
+#pragma mark - IBActions
 - (IBAction)logMeeting:(id)sender;
 - (IBAction)logParticipants:(id)sender;
+- (IBAction)startMeetingButton:(id)sender;
+- (IBAction)endMeetingButton:(id)sender;
+
+#pragma mark - Other Public Methods
 - (void)updateGUI:(NSTimer *)theTimer;
 
 @end

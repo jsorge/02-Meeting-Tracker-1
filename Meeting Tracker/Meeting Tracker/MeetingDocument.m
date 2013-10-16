@@ -8,8 +8,18 @@
 
 #import "MeetingDocument.h"
 
+@interface MeetingDocument ()
+
+@property (assign) IBOutlet NSButton *endMeetingButton;
+@property (assign) IBOutlet NSButton *startMeetingButton;
+@property (assign) IBOutlet NSTextField *elapsedTimeLabel;
+@property (assign) IBOutlet NSTextField *accruedCostLabel;
+
+@end
+
 @implementation MeetingDocument
 
+#pragma mark - Accessors
 - (id)init
 {
     self = [super init];
@@ -32,6 +42,90 @@
     return self;
 }
 
+- (Meeting *)meeting;
+{
+    return _meeting;
+}
+
+- (void)setMeeting:(Meeting *)aMeeting;
+{
+    if (_meeting != aMeeting) {
+        [aMeeting retain];
+        [_meeting release];
+        _meeting = aMeeting;
+    }
+}
+
+- (NSTimer *)timer;
+{
+    return _timer;
+}
+
+- (void)setTimer:(NSTimer *)aTimer;
+{
+    if (_timer != aTimer) {
+        [aTimer retain];
+        [_timer invalidate];
+        [_timer release];
+        _timer = aTimer;
+    }
+}
+
+#pragma mark - IBActions
+- (IBAction)logMeeting:(id)sender;
+{
+    NSLog(@"%@", [[self meeting] description]);
+}
+
+- (IBAction)logParticipants:(id)sender;
+{
+    NSArray *meetingParticipants = [[self meeting] personsPresent];
+    for (Person *attendee in meetingParticipants) {
+        NSLog(@"%@", [attendee description]);
+    }
+}
+
+- (IBAction)startMeetingButton:(id)sender
+{
+    [self.meeting setStartingTime:[NSDate date]];
+    [self.endMeetingButton setEnabled:YES];
+    [self.startMeetingButton setEnabled:NO];
+}
+
+- (IBAction)endMeetingButton:(id)sender
+{
+    [self.meeting setEndingTime:[NSDate date]];
+    [self.endMeetingButton setEnabled:NO];
+    [self.startMeetingButton setEnabled:YES];
+}
+
+#pragma mark - Other Public Methods
+- (void)updateGUI:(NSTimer *)theTimer;
+{
+    [self.currentTimeLabel setObjectValue:[NSDate date]];
+    self.elapsedTimeLabel.stringValue = [self.meeting elapsedTimeDisplayString];
+    [self.accruedCostLabel setObjectValue:[self.meeting accruedCost]];
+}
+
+#pragma mark - NSWindowDelegate
+- (void)windowWillClose:(NSNotification *)notification;
+{
+    [self setTimer:nil];
+}
+
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [_timer release];
+    _timer = nil;
+    
+    [_meeting release];
+    _meeting = nil;
+    
+    [super dealloc];
+}
+
+#pragma mark - Templated code
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
@@ -68,73 +162,6 @@
     NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
     @throw exception;
     return YES;
-}
-
-#pragma mark - Accessors
-- (Meeting *)meeting;
-{
-    return _meeting;
-}
-
-- (void)setMeeting:(Meeting *)aMeeting;
-{
-    if (_meeting != aMeeting) {
-        [aMeeting retain];
-        [_meeting release];
-        _meeting = aMeeting;
-    }
-}
-
-- (NSTimer *)timer;
-{
-    return _timer;
-}
-
-- (void)setTimer:(NSTimer *)aTimer;
-{
-    if (_timer != aTimer) {
-        [aTimer retain];
-        [_timer invalidate];
-        [_timer release];
-        _timer = aTimer;
-    }
-}
-
-#pragma mark - Other Public Methods
-- (IBAction)logMeeting:(id)sender;
-{
-    NSLog(@"%@", [[self meeting] description]);
-}
-
-- (IBAction)logParticipants:(id)sender;
-{
-    NSArray *meetingParticipants = [[self meeting] personsPresent];
-    for (Person *attendee in meetingParticipants) {
-        NSLog(@"%@", [attendee description]);
-    }
-}
-
-- (void)updateGUI:(NSTimer *)theTimer;
-{
-    [[self currentTimeLabel] setObjectValue:[NSDate date]];
-}
-
-#pragma mark - NSWindowDelegate
-- (void)windowWillClose:(NSNotification *)notification;
-{
-    [self setTimer:nil];
-}
-
-#pragma mark - Memory Management
-- (void)dealloc
-{
-    [_timer release];
-    _timer = nil;
-    
-    [_meeting release];
-    _meeting = nil;
-    
-    [super dealloc];
 }
 
 @end
