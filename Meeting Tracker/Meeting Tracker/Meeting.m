@@ -115,7 +115,6 @@
     self = [super init];
     if (self) {
         [self setPersonsPresent:[NSMutableArray array]];
-        [self setStartingTime:[NSDate date]];
     }
     return self;
 }
