@@ -94,6 +94,7 @@
 {
     if (_timer != aTimer) {
         [aTimer retain];
+        [_timer invalidate];
         [_timer release];
         _timer = aTimer;
     }
@@ -121,7 +122,7 @@
 #pragma mark - NSWindowDelegate
 - (void)windowWillClose:(NSNotification *)notification;
 {
-    [[self timer] invalidate];
+    [self setTimer:nil];
 }
 
 #pragma mark - Memory Management
