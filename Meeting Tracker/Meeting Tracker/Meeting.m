@@ -168,7 +168,12 @@
 
 - (NSString *)elapsedTimeDisplayString;
 {
-    return [NSString stringWithFormat:@"%f", [self elapsedHours]];
+    NSUInteger elapsedSecons = [self elapsedSeconds];
+    NSDate *meetingDate = [NSDate dateWithTimeIntervalSince1970:elapsedSecons];
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateFormat:@"HH:mm:ss"];
+    
+    return [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:meetingDate]];
 }
 
 - (NSNumber *)accruedCost;
