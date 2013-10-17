@@ -167,12 +167,19 @@
 
 - (NSString *)elapsedTimeDisplayString;
 {
-    NSUInteger elapsedSeconds = [self elapsedSeconds];
-    NSUInteger hours = elapsedSeconds / 3600;
-    NSUInteger minutes = (elapsedSeconds / 60) % 60;
-    NSUInteger seconds = elapsedSeconds % 60;
+    NSUInteger hours = 0;
+    NSUInteger minutes = 0;
+    NSUInteger seconds = 0;
     
-    return [NSString stringWithFormat:@"%lu:%lu:%lu", (unsigned long)hours, (unsigned long)minutes, (unsigned long)seconds];
+    if ([self startingTime]) {
+        NSUInteger elapsedSeconds = [self elapsedSeconds];
+        hours = elapsedSeconds / 3600;
+        minutes = (elapsedSeconds / 60) % 60;
+        seconds = elapsedSeconds % 60;
+    }
+    
+    return [NSString stringWithFormat:@"%02lu:%02lu:%02lu", (unsigned long)hours, (unsigned long)minutes, (unsigned long)
+            seconds];
 }
 
 - (NSNumber *)accruedCost;
