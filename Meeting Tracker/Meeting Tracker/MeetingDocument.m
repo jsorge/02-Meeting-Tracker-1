@@ -14,6 +14,7 @@
 @property (assign) IBOutlet NSButton *startMeetingButton;
 @property (assign) IBOutlet NSTextField *elapsedTimeLabel;
 @property (assign) IBOutlet NSTextField *accruedCostLabel;
+@property (assign) IBOutlet NSTextField *totalBillingRate_liveComputeField;
 
 @end
 
@@ -103,8 +104,22 @@
 - (void)updateGUI:(NSTimer *)theTimer;
 {
     [self.currentTimeLabel setObjectValue:[NSDate date]];
-    self.elapsedTimeLabel.stringValue = [self.meeting elapsedTimeDisplayString];
-    [self.accruedCostLabel setObjectValue:[self.meeting accruedCost]];
+    [self.totalBillingRate_liveComputeField setObjectValue:[self computeTotalBillingRate]];
+    if (self.meeting) {
+        self.elapsedTimeLabel.stringValue = [self.meeting elapsedTimeDisplayString];
+        self.accruedCostLabel.objectValue  = [self.meeting accruedCost];
+    }
+}
+
+#pragma mark - Private Helper Methods
+- (NSNumber *)computeTotalBillingRate
+{
+    NSArray *meetingParticipants = self.meeting.personsPresent;
+    __block double billingRate = 0;
+    [meetingParticipants enumerateObjectsUsingBlock:^(Person *person, NSUInteger idx, BOOL *stop) {
+        billingRate += [person.hourlyRate doubleValue];
+    }];
+    return @(billingRate);
 }
 
 #pragma mark - NSWindowDelegate
