@@ -208,6 +208,25 @@
     return @(totalRate);
 }
 
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[self startingTime] forKey:@"startingTime"];
+    [aCoder encodeObject:[self endingTime] forKey:@"endingTime"];
+    [aCoder encodeObject:[self personsPresent] forKey:@"personsPresent"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        [self setStartingTime:[aDecoder decodeObjectForKey:@"startingTime"]];
+        [self setEndingTime:[aDecoder decodeObjectForKey:@"endingTime"]];
+        [self setPersonsPresent:[aDecoder decodeObjectForKey:@"personsPresent"]];
+    }
+    return self;
+}
+
 #pragma mark - Memory Management
 - (void)dealloc
 {

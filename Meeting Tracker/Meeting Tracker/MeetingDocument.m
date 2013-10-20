@@ -128,6 +128,23 @@
     [self setTimer:nil];
 }
 
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.meeting forKey:@"meeting"];
+    [aCoder encodeObject:self.timer forKey:@"timer"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        self.meeting = [aDecoder decodeObjectForKey:@"meting"];
+        self.timer = [aDecoder decodeObjectForKey:@"timer"];
+    }
+    return self;
+}
+
 #pragma mark - Memory Management
 - (void)dealloc
 {
@@ -162,20 +179,24 @@
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-    // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-    NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    @throw exception;
-    return nil;
+    return [NSKeyedArchiver archivedDataWithRootObject:self.meeting];
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
-    // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
-    // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
-    // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    @throw exception;
+    Meeting *loadSavedMeeting = nil;
+    @try {
+        loadSavedMeeting = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception = %@", [exception localizedKey]);
+        if (outError) {
+            NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:@"The data is corrupted" forKey:NSLocalizedFailureReasonErrorKey];
+            *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:errorDictionary];
+        }
+        return NO;
+    }
+    self.meeting = loadSavedMeeting;
     return YES;
 }
 

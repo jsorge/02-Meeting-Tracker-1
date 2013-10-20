@@ -68,11 +68,29 @@
     return self;
 }
 
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[self name] forKey:@"name"];
+    [aCoder encodeObject:[self hourlyRate] forKey:@"hourlyRate"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        [self setName:[aDecoder decodeObjectForKey:@"name"]];
+        [self setHourlyRate:[aDecoder decodeObjectForKey:@"hourlyRate"]];
+    }
+    return self;
+}
+
 #pragma mark - Memory Management
 - (void)dealloc
 {
     [_name release];
     _name = nil;
+    
     
     [_hourlyRate release];
     _hourlyRate = nil;

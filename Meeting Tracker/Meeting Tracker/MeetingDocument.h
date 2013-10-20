@@ -10,7 +10,7 @@
 #import "Meeting.h"
 #import "Person.h"
 
-@interface MeetingDocument : NSDocument <NSWindowDelegate>
+@interface MeetingDocument : NSDocument <NSWindowDelegate, NSCoding>
 {
     Meeting *_meeting;
     NSTimer *_timer;
