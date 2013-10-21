@@ -43,7 +43,7 @@
     return self;
 }
 
-- (Meeting *)meeting;
+- (Meeting *)meeting
 {
     return _meeting;
 }
@@ -57,12 +57,12 @@
     }
 }
 
-- (NSTimer *)timer;
+- (NSTimer *)timer
 {
     return _timer;
 }
 
-- (void)setTimer:(NSTimer *)aTimer;
+- (void)setTimer:(NSTimer *)aTimer
 {
     if (_timer != aTimer) {
         [aTimer retain];
@@ -73,12 +73,12 @@
 }
 
 #pragma mark - IBActions
-- (IBAction)logMeeting:(id)sender;
+- (IBAction)logMeeting:(id)sender
 {
     NSLog(@"%@", [[self meeting] description]);
 }
 
-- (IBAction)logParticipants:(id)sender;
+- (IBAction)logParticipants:(id)sender
 {
     NSArray *meetingParticipants = [[self meeting] personsPresent];
     for (Person *attendee in meetingParticipants) {
@@ -101,7 +101,7 @@
 }
 
 #pragma mark - Other Public Methods
-- (void)updateGUI:(NSTimer *)theTimer;
+- (void)updateGUI:(NSTimer *)theTimer
 {
     [self.currentTimeLabel setObjectValue:[NSDate date]];
     [self.totalBillingRate_liveComputeField setObjectValue:[self computeTotalBillingRate]];
@@ -123,7 +123,7 @@
 }
 
 #pragma mark - NSWindowDelegate
-- (void)windowWillClose:(NSNotification *)notification;
+- (void)windowWillClose:(NSNotification *)notification
 {
     [self setTimer:nil];
 }
@@ -189,7 +189,7 @@
         loadSavedMeeting = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
     @catch (NSException *exception) {
-        NSLog(@"Exception = %@", [exception localizedKey]);
+        NSLog(@"Exception = %@", exception);
         if (outError) {
             NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject:@"The data is corrupted" forKey:NSLocalizedFailureReasonErrorKey];
             *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:errorDictionary];

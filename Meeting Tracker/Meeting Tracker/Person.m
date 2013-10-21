@@ -11,17 +11,17 @@
 @implementation Person
 
 #pragma mark - Accessors
-- (NSString *)description;
+- (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ bills at %@", [self name], [[self currencyFormatter] stringFromNumber:[self hourlyRate]]];
 }
 
-- (NSString *)name;
+- (NSString *)name
 {
     return _name;
 }
 
-- (void)setName:(NSString *)aParticipantName;
+- (void)setName:(NSString *)aParticipantName
 {
     if (aParticipantName != _name) {
         [_name release];
@@ -29,12 +29,12 @@
     }
 }
 
-- (NSNumber *)hourlyRate;
+- (NSNumber *)hourlyRate
 {
     return _hourlyRate;
 }
 
-- (void)setHourlyRate:(NSNumber *)anHourlyRate;
+- (void)setHourlyRate:(NSNumber *)anHourlyRate
 {
     if (anHourlyRate != _hourlyRate) {
         [anHourlyRate retain];
@@ -53,12 +53,12 @@
 }
 
 #pragma mark - Constructors
-+ (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
++ (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate
 {
     return [[[Person alloc] initWithName:name hourlyRate:rate] autorelease];
 }
 
-- (id)initWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
+- (id)initWithName:(NSString *)name hourlyRate:(NSNumber *)rate
 {
     self = [super init];
     if (self) {
