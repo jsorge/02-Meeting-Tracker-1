@@ -15,8 +15,13 @@
 @property (assign) IBOutlet NSTextField *elapsedTimeLabel;
 @property (assign) IBOutlet NSTextField *accruedCostLabel;
 @property (assign) IBOutlet NSTextField *totalBillingRate_liveComputeField;
+@property (assign) IBOutlet NSButton *meetingTemplateButton;
 
 @end
+
+#define CAPTAIN_MEETING @"Captains"
+#define MARX_MEETING @"Marxes"
+#define STOOGE_MEETING @"Stooges"
 
 @implementation MeetingDocument
 
@@ -25,20 +30,7 @@
 {
     self = [super init];
     if (self) {
-        NSUInteger random = arc4random_uniform(3);
-        switch (random) {
-            case 0:
-                [self setMeeting:[Meeting meetingWithCaptains]];
-                break;
-            case 1:
-                [self setMeeting:[Meeting meetingWithMarxBrothers]];
-                break;
-            case 2:
-                [self setMeeting:[Meeting meetingWithStooges]];
-                break;
-            default:
-                NSLog(@"No meeting was started because the random number was %lu", (unsigned long)random);
-        }
+        self.meeting = [[[Meeting alloc] init] autorelease];
     }
     return self;
 }
@@ -88,6 +80,7 @@
 
 - (IBAction)startMeetingButton:(id)sender
 {
+    self.meeting.endingTime = nil;
     [self.meeting setStartingTime:[NSDate date]];
     [self.endMeetingButton setEnabled:YES];
     [self.startMeetingButton setEnabled:NO];
@@ -98,6 +91,17 @@
     [self.meeting setEndingTime:[NSDate date]];
     [self.endMeetingButton setEnabled:NO];
     [self.startMeetingButton setEnabled:YES];
+}
+
+- (IBAction)loadTemplateMeeting:(NSButton *)sender
+{
+    if ( [sender.title isEqualToString:CAPTAIN_MEETING] ) {
+        [self setMeeting:[Meeting meetingWithCaptains]];
+    } else if ( [sender.title isEqualToString:MARX_MEETING] ) {
+        [self setMeeting:[Meeting meetingWithMarxBrothers]];
+    } else if ( [sender.title isEqualToString:STOOGE_MEETING] ) {
+        [self setMeeting:[Meeting meetingWithStooges]];
+    }
 }
 
 #pragma mark - Other Public Methods
@@ -111,6 +115,13 @@
     }
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    NSString *meetingButtonTitle = [self drawRandomMeeting];
+    [self.meetingTemplateButton.cell setTitle:meetingButtonTitle];
+}
+
 #pragma mark - Private Helper Methods
 - (NSNumber *)computeTotalBillingRate
 {
@@ -120,6 +131,26 @@
         billingRate += [person.hourlyRate doubleValue];
     }];
     return @(billingRate);
+}
+
+- (NSString *)drawRandomMeeting
+{
+    NSString *meetingTitle = @"";
+    NSUInteger random = arc4random_uniform(3);
+    switch (random) {
+        case 0:
+            meetingTitle = CAPTAIN_MEETING;
+            break;
+        case 1:
+            meetingTitle = MARX_MEETING;
+            break;
+        case 2:
+            meetingTitle = STOOGE_MEETING;
+            break;
+        default:
+            NSLog(@"No meeting was started because the random number was %lu", (unsigned long)random);
+    }
+    return meetingTitle;
 }
 
 #pragma mark - NSWindowDelegate
@@ -160,15 +191,12 @@
 #pragma mark - Templated code
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"MeetingDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
     [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
 }
 
