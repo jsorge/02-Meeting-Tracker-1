@@ -58,7 +58,7 @@
     return [[[Person alloc] initWithName:name hourlyRate:rate] autorelease];
 }
 
-- (id)initWithName:(NSString *)name hourlyRate:(NSNumber *)rate
+- (id)initWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
 {
     self = [super init];
     if (self) {
@@ -66,6 +66,11 @@
         [self setHourlyRate:rate];
     }
     return self;
+}
+
+- (id)init
+{
+    return [self initWithName:@"Person" hourlyRate:@(20)];
 }
 
 #pragma mark - NSCoding
