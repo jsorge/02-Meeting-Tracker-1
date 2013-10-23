@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>FE2498CB-F27E-4778-AF81-CDDA6708B518</string>
+	<string>4456D0FE-E867-4842-85EF-96EF56442347</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Meeting Tracker</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>141B824C-11E5-43E6-8AE6-5C99B86D84A1</key>
-		<string>ssh://github.com/jsorge/02-Meeting-Tracker-1.git</string>
+		<key>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</key>
+		<string>https://github.com/jsorge/02-Meeting-Tracker-1.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Meeting Tracker/Meeting Tracker.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>141B824C-11E5-43E6-8AE6-5C99B86D84A1</key>
+		<key>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/jsorge/02-Meeting-Tracker-1.git</string>
+	<string>https://github.com/jsorge/02-Meeting-Tracker-1.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>141B824C-11E5-43E6-8AE6-5C99B86D84A1</string>
+	<string>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>141B824C-11E5-43E6-8AE6-5C99B86D84A1</string>
+			<string>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</string>
 			<key>IDESourceControlWCCName</key>
 			<string>02-Meeting Tracker 1</string>
 		</dict>

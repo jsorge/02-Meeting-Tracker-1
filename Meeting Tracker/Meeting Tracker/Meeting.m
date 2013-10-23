@@ -9,6 +9,8 @@
 #import "Meeting.h"
 #import "Person.h"
 
+NSString *const totalBillingRateString = @"totalBillingRate";
+
 @implementation Meeting
 
 #pragma mark - Accessors
@@ -198,6 +200,7 @@
 
 - (NSNumber *)totalBillingRate
 {
+    [self willChangeValueForKey:totalBillingRateString];
     double totalRate = 0;
     
     for (Person *person in [self personsPresent]) {
@@ -206,6 +209,7 @@
     }
     
     return @(totalRate);
+    [self didChangeValueForKey:totalBillingRateString];
 }
 
 #pragma mark - NSCoding
@@ -225,6 +229,22 @@
         [self setPersonsPresent:[aDecoder decodeObjectForKey:@"personsPresent"]];
     }
     return self;
+}
+
+#pragma mark - KVO
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+{
+    
+}
+
+- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
+{
+    
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
 }
 
 #pragma mark - Memory Management
