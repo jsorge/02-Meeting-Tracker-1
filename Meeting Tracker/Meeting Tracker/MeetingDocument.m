@@ -9,14 +9,12 @@
 #import "MeetingDocument.h"
 
 @interface MeetingDocument ()
-
 @property (assign) IBOutlet NSButton *endMeetingButton;
 @property (assign) IBOutlet NSButton *startMeetingButton;
 @property (assign) IBOutlet NSTextField *elapsedTimeLabel;
 @property (assign) IBOutlet NSTextField *accruedCostLabel;
 @property (assign) IBOutlet NSTextField *totalBillingRate_liveComputeField;
 @property (assign) IBOutlet NSButton *meetingTemplateButton;
-
 @end
 
 #define CAPTAIN_MEETING @"Captains"
@@ -62,6 +60,11 @@
         [_timer release];
         _timer = aTimer;
     }
+}
+
+- (void)startTimer
+{
+    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
 }
 
 #pragma mark - IBActions
@@ -163,7 +166,6 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.meeting forKey:@"meeting"];
-    [aCoder encodeObject:self.timer forKey:@"timer"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -171,7 +173,7 @@
     self = [super init];
     if (self) {
         self.meeting = [aDecoder decodeObjectForKey:@"meting"];
-        self.timer = [aDecoder decodeObjectForKey:@"timer"];
+        [self startTimer];
     }
     return self;
 }
@@ -197,7 +199,7 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
+    [self startTimer];
 }
 
 + (BOOL)autosavesInPlace
