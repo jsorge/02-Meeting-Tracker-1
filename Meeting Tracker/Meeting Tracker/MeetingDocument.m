@@ -1,12 +1,16 @@
-//
+
 //  JMSDocument.m
 //  Meeting Tracker
 //
 //  Created by Jared Sorge on 10/8/13.
 //  Copyright (c) 2013 jsorge. All rights reserved.
-//
+
 
 #import "MeetingDocument.h"
+
+NSString *personNameKeyPath = @"name";
+NSString *personHourlyRateKeyPath = @"hourlyRate";
+NSString *meetingPersonsPresentKeypath = @"personsPresent";
 
 @interface MeetingDocument ()
 @property (assign) IBOutlet NSButton *endMeetingButton;
@@ -22,8 +26,11 @@
 NSString *const captainMeeting = @"Captains";
 NSString *const marxMeeting = @"Marxes";
 NSString *const stoogesMeeting = @"Stooges";
+NSString *const arrangedObjectsCountKey = @"@count.arrangedObjects";
+NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
 
 @implementation MeetingDocument
+static void *documentContext;
 
 #pragma mark - Accessors
 - (id)init
@@ -162,7 +169,7 @@ NSString *const stoogesMeeting = @"Stooges";
 - (void)windowWillClose:(NSNotification *)notification
 {
     [self setTimer:nil];
-    [self unregisterForChangeNotification];
+//    [self unregisterForChangeNotification];
 }
 
 #pragma mark - NSCoding
@@ -203,7 +210,7 @@ NSString *const stoogesMeeting = @"Stooges";
 {
     [super windowControllerDidLoadNib:aController];
     [self startTimer];
-    [self registerForChangeNotification];
+//    [self registerForChangeNotification];
 }
 
 + (BOOL)autosavesInPlace
@@ -234,23 +241,99 @@ NSString *const stoogesMeeting = @"Stooges";
     return YES;
 }
 
+#pragma mark - Undo/Redo
+- (void)changeKeyPath:(NSString *)keyPath ofObject:(id)object toValue:(id)value
+{
+    [object setValue:value forKey:keyPath];
+}
+
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    DLog(@"%@", keyPath);
-    [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
+//    [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
+    
+    if (context != documentContext) {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
+    }
+    switch ([change[NSKeyValueChangeKindKey] integerValue]) {
+        case NSKeyValueChangeSetting: {
+            id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
+            if (oldValue == [NSNull null]) {
+                oldValue = nil;
+            }
+            [[self.undoManager prepareWithInvocationTarget:self] changeKeyPath:keyPath ofObject:object toValue:oldValue];
+            break;
+        }
+        case NSKeyValueChangeInsertion: {
+            if ([keyPath isEqualToString:meetingPersonsPresentKeypath]) {
+                [[self.undoManager prepareWithInvocationTarget:self.meeting] removeObjectFromPersonsPresentAtIndex:[change[NSKeyValueChangeIndexesKey] integerValue]];
+                for (Person *person in change[NSKeyValueChangeNewKey]) {
+                    [self startObservingPerson:person];
+                }
+            }
+            break;
+        }
+        case NSKeyValueChangeRemoval: {
+            if ([keyPath isEqualToString:meetingPersonsPresentKeypath]) {
+                [[self.undoManager prepareWithInvocationTarget:self.meeting] insertObject:object inPersonsPresentAtIndex:[change[NSKeyValueChangeIndexesKey] integerValue]];
+                for (Person *person in change[NSKeyValueChangeOldKey]) {
+                    [self stopObservingPerson:person];
+                }
+            }
+            break;
+        }
+    }
+}
+//
+//- (void)registerForChangeNotification
+//{
+//    [self.meetingArrayController addObserver:self forKeyPath:arrangedObjectsCountKey options:NSKeyValueObservingOptionOld context:NULL];
+//    [self.meetingArrayController addObserver:self forKeyPath:arrangedObjectsHourlyRateKey options:NSKeyValueObservingOptionOld context:NULL];
+//}
+//
+//- (void)unregisterForChangeNotification
+//{
+//    [self.meetingArrayController removeObserver:self forKeyPath:arrangedObjectsCountKey];
+//    [self.meetingArrayController removeObserver:self forKeyPath:arrangedObjectsHourlyRateKey];
+//}
+
+- (void)startObservingMeeting:(Meeting *)meeting
+{
+    for (Person *person in meeting.personsPresent) {
+        [self startObservingPerson:person];
+    }
+    [meeting addObserver:self
+              forKeyPath:meetingPersonsPresentKeypath
+                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                 context:documentContext];
 }
 
-- (void)registerForChangeNotification
+- (void)stopObservingMeeting:(Meeting *)meeting
 {
-    [self.meetingArrayController addObserver:self forKeyPath:@"@count.arrangedObjects" options:NSKeyValueObservingOptionOld context:NULL];
-    [self.meetingArrayController addObserver:self forKeyPath:@"arrangedObjects.hourlyRate" options:NSKeyValueObservingOptionOld context:NULL];
+    for (Person *person in meeting.personsPresent) {
+        [self stopObservingPerson:person];
+    }
+    [meeting removeObserver:self forKeyPath:meetingPersonsPresentKeypath context:documentContext];
 }
 
-- (void)unregisterForChangeNotification
+- (void)startObservingPerson:(Person *)person
 {
-    [self.meetingArrayController removeObserver:self forKeyPath:@"@count.arrangedObjects"];
-    [self.meetingArrayController removeObserver:self forKeyPath:@"arrangedObjects.hourlyRate"];
+    [person addObserver:self
+             forKeyPath:personNameKeyPath
+                options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                context:documentContext];
+    [person addObserver:self
+             forKeyPath:personHourlyRateKeyPath
+                options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                context:documentContext];
+    
+}
+
+- (void)stopObservingPerson:(Person *)person
+{
+    [person removeObserver:self forKeyPath:personNameKeyPath context:documentContext];
+    [person removeObserver:self forKeyPath:personHourlyRateKeyPath context:documentContext];
 }
 
 @end

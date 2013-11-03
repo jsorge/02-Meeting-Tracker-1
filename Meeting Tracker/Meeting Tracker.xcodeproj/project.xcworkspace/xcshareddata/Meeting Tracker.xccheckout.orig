@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+<<<<<<< HEAD
+	<string>E0C93786-2480-4D3C-B167-838DA0190D51</string>
+=======
+	<string>4456D0FE-E867-4842-85EF-96EF56442347</string>
+>>>>>>> refs/heads/meetingTracker-hw3
+	<key>IDESourceControlProjectName</key>
+	<string>Meeting Tracker</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+<<<<<<< HEAD
+		<key>15570B12-1A33-41E6-AF7C-9B04DD2CF4A4</key>
+=======
+		<key>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</key>
+>>>>>>> refs/heads/meetingTracker-hw3
+		<string>https://github.com/jsorge/02-Meeting-Tracker-1.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Meeting Tracker/Meeting Tracker.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+<<<<<<< HEAD
+		<key>15570B12-1A33-41E6-AF7C-9B04DD2CF4A4</key>
+=======
+		<key>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</key>
+>>>>>>> refs/heads/meetingTracker-hw3
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jsorge/02-Meeting-Tracker-1.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+<<<<<<< HEAD
+	<string>15570B12-1A33-41E6-AF7C-9B04DD2CF4A4</string>
+=======
+	<string>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</string>
+>>>>>>> refs/heads/meetingTracker-hw3
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+<<<<<<< HEAD
+			<string>15570B12-1A33-41E6-AF7C-9B04DD2CF4A4</string>
+=======
+			<string>D88CAA48-5310-4CF8-8FA5-E599C907E6C3</string>
+>>>>>>> refs/heads/meetingTracker-hw3
+			<key>IDESourceControlWCCName</key>
+			<string>02-Meeting Tracker 1</string>
+		</dict>
+	</array>
+</dict>
+</plist>

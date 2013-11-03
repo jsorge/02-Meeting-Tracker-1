@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		938B60C118050E010036CDAC /* Meeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B60BE18050E010036CDAC /* Meeting.m */; };
 		938B60C218050E010036CDAC /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B60C018050E010036CDAC /* Person.m */; };
+		939DADC91825A9860001CA1B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DADC81825A9860001CA1B /* AppDelegate.m */; };
 		93A687F91804F24400232901 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A687F81804F24400232901 /* Cocoa.framework */; };
 		93A688031804F24400232901 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93A688011804F24400232901 /* InfoPlist.strings */; };
 		93A688051804F24400232901 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A688041804F24400232901 /* main.m */; };
@@ -40,6 +41,8 @@
 		938B60BE18050E010036CDAC /* Meeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meeting.m; sourceTree = "<group>"; };
 		938B60BF18050E010036CDAC /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		938B60C018050E010036CDAC /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		939DADC71825A9860001CA1B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		939DADC81825A9860001CA1B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		93A687F51804F24400232901 /* Meeting Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meeting Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A687F81804F24400232901 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		93A687FB1804F24400232901 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -94,6 +97,15 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		939DADC61825A96B0001CA1B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				93A6880D1804F24400232901 /* MeetingDocument.xib */,
+				93A688101804F24400232901 /* MainMenu.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		93A687EC1804F24400232901 = {
 			isa = PBXGroup;
 			children = (
@@ -136,10 +148,9 @@
 		93A687FE1804F24400232901 /* Meeting Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				939DADC61825A96B0001CA1B /* View */,
 				93A688391804F36500232901 /* Model */,
 				938B60BC1804F7EB0036CDAC /* Controller */,
-				93A6880D1804F24400232901 /* MeetingDocument.xib */,
-				93A688101804F24400232901 /* MainMenu.xib */,
 				93A688131804F24400232901 /* Images.xcassets */,
 				93A687FF1804F24400232901 /* Supporting Files */,
 			);
@@ -149,6 +160,8 @@
 		93A687FF1804F24400232901 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				939DADC71825A9860001CA1B /* AppDelegate.h */,
+				939DADC81825A9860001CA1B /* AppDelegate.m */,
 				93A688001804F24400232901 /* Meeting Tracker-Info.plist */,
 				93A688011804F24400232901 /* InfoPlist.strings */,
 				93A688041804F24400232901 /* main.m */,
@@ -293,6 +306,7 @@
 				938B60C118050E010036CDAC /* Meeting.m in Sources */,
 				938B60C218050E010036CDAC /* Person.m in Sources */,
 				93A6880C1804F24400232901 /* MeetingDocument.m in Sources */,
+				939DADC91825A9860001CA1B /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

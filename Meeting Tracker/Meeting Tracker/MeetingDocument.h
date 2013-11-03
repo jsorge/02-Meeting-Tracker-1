@@ -10,6 +10,10 @@
 #import "Meeting.h"
 #import "Person.h"
 
+extern NSString *personNameKeyPath;
+extern NSString *personHourlyRateKeyPath;
+extern NSString *meetingPersonsPresentKeypath;
+
 @interface MeetingDocument : NSDocument <NSWindowDelegate, NSCoding>
 {
     Meeting *_meeting;
