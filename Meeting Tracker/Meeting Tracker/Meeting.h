@@ -33,8 +33,10 @@
 #pragma mark - Other Public Methods
 - (void)addToPersonsPresent:(id)personsPresentObject;
 - (void)removeFromPersonsPresent:(id)personsPresentObject;
+- (void)removePersonsPresentAtIndexes:(NSIndexSet *)indexes;
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx;
 - (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx;
+- (void)insertPersonsPresent:(NSArray *)personsPresent atIndexes:(NSIndexSet *)indexes;
 - (NSUInteger)countOfPersonsPresent;
 - (NSUInteger)elapsedSeconds;
 - (double)elapsedHours;

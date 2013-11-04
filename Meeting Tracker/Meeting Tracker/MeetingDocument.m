@@ -11,6 +11,8 @@
 NSString *personNameKeyPath = @"name";
 NSString *personHourlyRateKeyPath = @"hourlyRate";
 NSString *meetingPersonsPresentKeypath = @"personsPresent";
+NSString *meetingTimeStartKeypath = @"startingTime";
+NSString *meetingTimeEndKeypath = @"endingTime";
 
 @interface MeetingDocument ()
 @property (assign) IBOutlet NSButton *endMeetingButton;
@@ -30,7 +32,6 @@ NSString *const arrangedObjectsCountKey = @"@count.arrangedObjects";
 NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
 
 @implementation MeetingDocument
-static void *documentContext;
 
 #pragma mark - Accessors
 - (id)init
@@ -50,9 +51,11 @@ static void *documentContext;
 - (void)setMeeting:(Meeting *)aMeeting;
 {
     if (_meeting != aMeeting) {
+        [self stopObservingMeeting:_meeting];
         [aMeeting retain];
         [_meeting release];
         _meeting = aMeeting;
+        [self startObservingMeeting:_meeting];
     }
 }
 
@@ -73,7 +76,7 @@ static void *documentContext;
 
 - (void)startTimer
 {
-    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
+    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
 }
 
 #pragma mark - IBActions
@@ -169,7 +172,7 @@ static void *documentContext;
 - (void)windowWillClose:(NSNotification *)notification
 {
     [self setTimer:nil];
-//    [self unregisterForChangeNotification];
+    [self stopObservingMeeting:self.meeting];
 }
 
 #pragma mark - NSCoding
@@ -191,6 +194,8 @@ static void *documentContext;
 #pragma mark - Memory Management
 - (void)dealloc
 {
+    [self stopObservingMeeting:self.meeting];
+    
     [_timer release];
     _timer = nil;
     
@@ -210,7 +215,7 @@ static void *documentContext;
 {
     [super windowControllerDidLoadNib:aController];
     [self startTimer];
-//    [self registerForChangeNotification];
+    [self startObservingMeeting:self.meeting];
 }
 
 + (BOOL)autosavesInPlace
@@ -244,18 +249,12 @@ static void *documentContext;
 #pragma mark - Undo/Redo
 - (void)changeKeyPath:(NSString *)keyPath ofObject:(id)object toValue:(id)value
 {
-    [object setValue:value forKey:keyPath];
+    [object setValue:value forKeyPath:keyPath];
 }
 
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-//    [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
-    
-    if (context != documentContext) {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-        return;
-    }
     switch ([change[NSKeyValueChangeKindKey] integerValue]) {
         case NSKeyValueChangeSetting: {
             id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
@@ -263,40 +262,30 @@ static void *documentContext;
                 oldValue = nil;
             }
             [[self.undoManager prepareWithInvocationTarget:self] changeKeyPath:keyPath ofObject:object toValue:oldValue];
+            self.undoManager.actionName = @"Edit";
+            [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
             break;
         }
-        case NSKeyValueChangeInsertion: {
+        case NSKeyValueChangeInsertion:
             if ([keyPath isEqualToString:meetingPersonsPresentKeypath]) {
-                [[self.undoManager prepareWithInvocationTarget:self.meeting] removeObjectFromPersonsPresentAtIndex:[change[NSKeyValueChangeIndexesKey] integerValue]];
+                [[self.undoManager prepareWithInvocationTarget:self.meeting] removePersonsPresentAtIndexes:change[NSKeyValueChangeIndexesKey]];
                 for (Person *person in change[NSKeyValueChangeNewKey]) {
                     [self startObservingPerson:person];
                 }
+                [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
             }
             break;
-        }
-        case NSKeyValueChangeRemoval: {
+        case NSKeyValueChangeRemoval:
             if ([keyPath isEqualToString:meetingPersonsPresentKeypath]) {
-                [[self.undoManager prepareWithInvocationTarget:self.meeting] insertObject:object inPersonsPresentAtIndex:[change[NSKeyValueChangeIndexesKey] integerValue]];
+                [[self.undoManager prepareWithInvocationTarget:self.meeting] insertPersonsPresent:change[NSKeyValueChangeOldKey] atIndexes:change[NSKeyValueChangeIndexesKey]];
                 for (Person *person in change[NSKeyValueChangeOldKey]) {
                     [self stopObservingPerson:person];
                 }
+                [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
             }
             break;
-        }
     }
 }
-//
-//- (void)registerForChangeNotification
-//{
-//    [self.meetingArrayController addObserver:self forKeyPath:arrangedObjectsCountKey options:NSKeyValueObservingOptionOld context:NULL];
-//    [self.meetingArrayController addObserver:self forKeyPath:arrangedObjectsHourlyRateKey options:NSKeyValueObservingOptionOld context:NULL];
-//}
-//
-//- (void)unregisterForChangeNotification
-//{
-//    [self.meetingArrayController removeObserver:self forKeyPath:arrangedObjectsCountKey];
-//    [self.meetingArrayController removeObserver:self forKeyPath:arrangedObjectsHourlyRateKey];
-//}
 
 - (void)startObservingMeeting:(Meeting *)meeting
 {
@@ -306,7 +295,15 @@ static void *documentContext;
     [meeting addObserver:self
               forKeyPath:meetingPersonsPresentKeypath
                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                 context:documentContext];
+                 context:NULL];
+    [meeting addObserver:self
+              forKeyPath:meetingTimeStartKeypath
+                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                 context:NULL];
+    [meeting addObserver:self
+              forKeyPath:meetingTimeEndKeypath
+                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                 context:NULL];
 }
 
 - (void)stopObservingMeeting:(Meeting *)meeting
@@ -314,7 +311,9 @@ static void *documentContext;
     for (Person *person in meeting.personsPresent) {
         [self stopObservingPerson:person];
     }
-    [meeting removeObserver:self forKeyPath:meetingPersonsPresentKeypath context:documentContext];
+    [meeting removeObserver:self forKeyPath:meetingPersonsPresentKeypath];
+    [meeting removeObserver:self forKeyPath:meetingTimeStartKeypath];
+    [meeting removeObserver:self forKeyPath:meetingTimeEndKeypath];
 }
 
 - (void)startObservingPerson:(Person *)person
@@ -322,18 +321,18 @@ static void *documentContext;
     [person addObserver:self
              forKeyPath:personNameKeyPath
                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                context:documentContext];
+                context:NULL];
     [person addObserver:self
              forKeyPath:personHourlyRateKeyPath
                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                context:documentContext];
+                context:NULL];
     
 }
 
 - (void)stopObservingPerson:(Person *)person
 {
-    [person removeObserver:self forKeyPath:personNameKeyPath context:documentContext];
-    [person removeObserver:self forKeyPath:personHourlyRateKeyPath context:documentContext];
+    [person removeObserver:self forKeyPath:personNameKeyPath];
+    [person removeObserver:self forKeyPath:personHourlyRateKeyPath];
 }
 
 @end

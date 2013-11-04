@@ -13,6 +13,8 @@
 extern NSString *personNameKeyPath;
 extern NSString *personHourlyRateKeyPath;
 extern NSString *meetingPersonsPresentKeypath;
+extern NSString *meetingTimeStartKeypath;
+extern NSString *meetingTimeEndKeypath;
 
 @interface MeetingDocument : NSDocument <NSWindowDelegate, NSCoding>
 {

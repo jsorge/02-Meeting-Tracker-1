@@ -124,17 +124,22 @@ NSString *const totalBillingRateString = @"totalBillingRate";
 #pragma mark - Other Public Methods
 - (void)addToPersonsPresent:(id)personsPresentObject
 {
-    [_personsPresent addObject:personsPresentObject];
+    [[self personsPresent] addObject:personsPresentObject];
 }
 
 - (void)removeFromPersonsPresent:(id)personsPresentObject
 {
-    [_personsPresent removeObject:personsPresentObject];
+    [[self personsPresent] removeObject:personsPresentObject];
+}
+
+- (void)removePersonsPresentAtIndexes:(NSIndexSet *)indexes
+{
+    [[self personsPresent] removeObjectsAtIndexes:indexes];
 }
 
 - (NSUInteger)countOfPersonsPresent
 {
-    return [_personsPresent count];
+    return [[self personsPresent] count];
 }
 
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx
@@ -145,6 +150,11 @@ NSString *const totalBillingRateString = @"totalBillingRate";
 - (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx
 {
     [[self personsPresent] insertObject:anObject atIndex:idx];
+}
+
+- (void)insertPersonsPresent:(NSArray *)personsPresent atIndexes:(NSIndexSet *)indexes
+{
+    [[self personsPresent] insertObjects:personsPresent atIndexes:indexes];
 }
 
 - (NSUInteger)elapsedSeconds
@@ -200,7 +210,6 @@ NSString *const totalBillingRateString = @"totalBillingRate";
 
 - (NSNumber *)totalBillingRate
 {
-    [self willChangeValueForKey:totalBillingRateString];
     double totalRate = 0;
     
     for (Person *person in [self personsPresent]) {
@@ -209,7 +218,6 @@ NSString *const totalBillingRateString = @"totalBillingRate";
     }
     
     return @(totalRate);
-    [self didChangeValueForKey:totalBillingRateString];
 }
 
 #pragma mark - NSCoding
@@ -230,12 +238,6 @@ NSString *const totalBillingRateString = @"totalBillingRate";
     }
     return self;
 }
-
-#pragma mark - KVO
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-//{
-//    
-//}
 
 #pragma mark - Memory Management
 - (void)dealloc
