@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *defaultNameKey;
+extern NSString *defaultHourlyRateKey;
+
 @interface Person : NSObject <NSCoding>
 {
     NSString *_name;

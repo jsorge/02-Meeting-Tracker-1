@@ -194,7 +194,7 @@
                             <rect key="frame" x="1" y="17" width="562" height="164"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="tEh-qj-JjG" id="bPQ-cd-kXD">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" headerView="tEh-qj-JjG" id="bPQ-cd-kXD">
                                     <rect key="frame" x="0.0" y="0.0" width="562" height="164"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -212,6 +212,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="name"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
                                                 <binding destination="SfF-lx-BgS" name="value" keyPath="arrangedObjects.name" id="uyw-aE-y0L"/>
@@ -231,6 +232,7 @@
                                                     <outlet property="formatter" destination="Ogd-MP-RGf" id="1fY-54-bQP"/>
                                                 </connections>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="hourlyRate"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <connections>
                                                 <binding destination="SfF-lx-BgS" name="value" keyPath="arrangedObjects.hourlyRate" id="VGP-V6-BTT"/>
@@ -391,6 +393,11 @@
         <arrayController objectClassName="Person" id="SfF-lx-BgS">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="self.meeting.personsPresent" id="p6T-9C-N1N"/>
+                <binding destination="ahx-0f-Uzr" name="sortDescriptors" keyPath="values.participantsTableSortDescriptors" id="VoJ-kg-m0P">
+                    <dictionary key="options">
+                        <string key="NSValueTransformerName">NSUnarchiveFromData</string>
+                    </dictionary>
+                </binding>
             </connections>
         </arrayController>
         <numberFormatter formatterBehavior="default10_4" positiveFormat="¤#,##0.00" negativeFormat="(¤#,##0.00)" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" positivePrefix="$" negativePrefix="($" negativeSuffix=")" id="Ogd-MP-RGf">
@@ -399,5 +406,6 @@
                 <bool key="localizesFormat" value="YES"/>
             </metadata>
         </numberFormatter>
+        <userDefaultsController representsSharedInstance="YES" id="ahx-0f-Uzr"/>
     </objects>
 </document>

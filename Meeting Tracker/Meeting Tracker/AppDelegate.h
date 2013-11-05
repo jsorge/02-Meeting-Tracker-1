@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 @class JMSPreferencesWindowController;
 
-extern NSString *defaultNameKey;
-extern NSString *defaultHourlyRateKey;
-
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (nonatomic, retain, readonly)JMSPreferencesWindowController *preferencesWindow;

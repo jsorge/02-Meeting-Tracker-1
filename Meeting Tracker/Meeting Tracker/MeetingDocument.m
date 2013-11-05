@@ -354,7 +354,5 @@ static void *documentContext;
     return shouldEnable;
 }
 
-#pragma mark - NSArrayController
-
 
 @end

@@ -9,9 +9,6 @@
 #import "AppDelegate.h"
 #import "JMSPreferencesWindowController.h"
 
-NSString *defaultNameKey = @"name";
-NSString *defaultHourlyRateKey = @"hourlyRate";
-
 @interface AppDelegate ()
 
 @property (nonatomic, retain, readwrite)JMSPreferencesWindowController *preferencesWindow;

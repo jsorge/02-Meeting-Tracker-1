@@ -8,6 +8,9 @@
 
 #import "Person.h"
 
+NSString *defaultNameKey = @"name";
+NSString *defaultHourlyRateKey = @"hourlyRate";
+
 @implementation Person
 
 #pragma mark - Accessors
@@ -70,22 +73,24 @@
 
 - (id)init
 {
-    return [self initWithName:@"Person" hourlyRate:@(20)];
+    NSString *defaultName = [[NSUserDefaults standardUserDefaults] stringForKey:defaultNameKey];
+    NSNumber *defaultRate = @([[NSUserDefaults standardUserDefaults] floatForKey:defaultHourlyRateKey]);
+    return [self initWithName:defaultName hourlyRate:defaultRate];
 }
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:[self name] forKey:@"name"];
-    [aCoder encodeObject:[self hourlyRate] forKey:@"hourlyRate"];
+    [aCoder encodeObject:[self name] forKey:defaultNameKey];
+    [aCoder encodeObject:[self hourlyRate] forKey:defaultHourlyRateKey];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
     if (self) {
-        [self setName:[aDecoder decodeObjectForKey:@"name"]];
-        [self setHourlyRate:[aDecoder decodeObjectForKey:@"hourlyRate"]];
+        [self setName:[aDecoder decodeObjectForKey:defaultNameKey]];
+        [self setHourlyRate:[aDecoder decodeObjectForKey:defaultHourlyRateKey]];
     }
     return self;
 }
