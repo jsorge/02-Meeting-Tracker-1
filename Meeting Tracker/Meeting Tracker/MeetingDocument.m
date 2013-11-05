@@ -32,6 +32,7 @@ NSString *const arrangedObjectsCountKey = @"@count.arrangedObjects";
 NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
 
 @implementation MeetingDocument
+static void *documentContext;
 
 #pragma mark - Accessors
 - (id)init
@@ -255,6 +256,11 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    if (context != documentContext) {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
+    }
+    
     switch ([change[NSKeyValueChangeKindKey] integerValue]) {
         case NSKeyValueChangeSetting: {
             id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
@@ -263,7 +269,6 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
             }
             [[self.undoManager prepareWithInvocationTarget:self] changeKeyPath:keyPath ofObject:object toValue:oldValue];
             self.undoManager.actionName = @"Edit";
-            [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
             break;
         }
         case NSKeyValueChangeInsertion:
@@ -272,7 +277,6 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
                 for (Person *person in change[NSKeyValueChangeNewKey]) {
                     [self startObservingPerson:person];
                 }
-                [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
             }
             break;
         case NSKeyValueChangeRemoval:
@@ -281,7 +285,6 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
                 for (Person *person in change[NSKeyValueChangeOldKey]) {
                     [self stopObservingPerson:person];
                 }
-                [self.totalBillingRateLabel_KVO setObjectValue:[self.meeting totalBillingRate]];
             }
             break;
     }
@@ -295,15 +298,15 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
     [meeting addObserver:self
               forKeyPath:meetingPersonsPresentKeypath
                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                 context:NULL];
+                 context:documentContext];
     [meeting addObserver:self
               forKeyPath:meetingTimeStartKeypath
                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                 context:NULL];
+                 context:documentContext];
     [meeting addObserver:self
               forKeyPath:meetingTimeEndKeypath
                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                 context:NULL];
+                 context:documentContext];
 }
 
 - (void)stopObservingMeeting:(Meeting *)meeting
@@ -321,11 +324,11 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
     [person addObserver:self
              forKeyPath:personNameKeyPath
                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                context:NULL];
+                context:documentContext];
     [person addObserver:self
              forKeyPath:personHourlyRateKeyPath
                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                context:NULL];
+                context:documentContext];
     
 }
 
