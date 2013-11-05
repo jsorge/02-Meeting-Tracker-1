@@ -335,4 +335,17 @@ NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
     [person removeObserver:self forKeyPath:personHourlyRateKeyPath];
 }
 
+#pragma mark - Menu Items
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    BOOL shouldEnable = YES;
+    
+    
+    
+    return shouldEnable;
+}
+
+#pragma mark - NSArrayController
+
+
 @end

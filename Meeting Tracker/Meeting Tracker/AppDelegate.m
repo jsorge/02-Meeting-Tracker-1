@@ -7,7 +7,40 @@
 //
 
 #import "AppDelegate.h"
+#import "JMSPreferencesWindowController.h"
+
+NSString *defaultNameKey = @"name";
+NSString *defaultHourlyRateKey = @"hourlyRate";
+
+@interface AppDelegate ()
+
+@property (nonatomic, retain, readwrite)JMSPreferencesWindowController *preferencesWindow;
+
+@end
 
 @implementation AppDelegate
+#pragma mark - Properties
+- (JMSPreferencesWindowController *)preferencesWindow
+{
+    if (!_preferencesWindow) {
+        _preferencesWindow = [[JMSPreferencesWindowController alloc] init];
+    }
+    return _preferencesWindow;
+}
+
+#pragma mark - IBActions
+- (IBAction)showPreferences:(NSMenuItem *)sender
+{
+    [[self.preferencesWindow window] makeKeyAndOrderFront:nil];
+}
+
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [_preferencesWindow release];
+    _preferencesWindow = nil;
+    
+    [super dealloc];
+}
 
 @end
