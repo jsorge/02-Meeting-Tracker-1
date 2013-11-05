@@ -43,5 +43,7 @@
 - (NSString *)elapsedTimeDisplayString;
 - (NSNumber *)accruedCost;
 - (NSNumber *)totalBillingRate;
+- (BOOL)canStart;
+- (BOOL)canStop;
 
 @end

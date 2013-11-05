@@ -77,7 +77,7 @@ static void *documentContext;
 
 - (void)startTimer
 {
-    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
+    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(updateGUI:) userInfo:nil repeats:YES]];
 }
 
 #pragma mark - IBActions
@@ -250,12 +250,14 @@ static void *documentContext;
 #pragma mark - Undo/Redo
 - (void)changeKeyPath:(NSString *)keyPath ofObject:(id)object toValue:(id)value
 {
+    LogMethod();
     [object setValue:value forKeyPath:keyPath];
 }
 
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    LogMethod();
     if (context != documentContext) {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         return;
@@ -292,6 +294,7 @@ static void *documentContext;
 
 - (void)startObservingMeeting:(Meeting *)meeting
 {
+    LogMethod();
     for (Person *person in meeting.personsPresent) {
         [self startObservingPerson:person];
     }
@@ -311,6 +314,7 @@ static void *documentContext;
 
 - (void)stopObservingMeeting:(Meeting *)meeting
 {
+    LogMethod();
     for (Person *person in meeting.personsPresent) {
         [self stopObservingPerson:person];
     }
@@ -321,6 +325,7 @@ static void *documentContext;
 
 - (void)startObservingPerson:(Person *)person
 {
+    LogMethod();
     [person addObserver:self
              forKeyPath:personNameKeyPath
                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
@@ -334,6 +339,7 @@ static void *documentContext;
 
 - (void)stopObservingPerson:(Person *)person
 {
+    LogMethod();
     [person removeObserver:self forKeyPath:personNameKeyPath];
     [person removeObserver:self forKeyPath:personHourlyRateKeyPath];
 }

@@ -220,6 +220,16 @@ NSString *const totalBillingRateString = @"totalBillingRate";
     return @(totalRate);
 }
 
+- (BOOL)canStart
+{
+    return YES;
+}
+
+- (BOOL)canStop
+{
+    return YES;
+}
+
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
