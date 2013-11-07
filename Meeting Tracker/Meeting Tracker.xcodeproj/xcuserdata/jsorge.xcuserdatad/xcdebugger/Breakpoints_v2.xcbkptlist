@@ -29,27 +29,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Meeting Tracker/MeetingDocument.m"
-            timestampString = "405326972.394619"
+            timestampString = "405494817.753293"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Meeting Tracker/MeetingDocument.m"
-            timestampString = "405311516.211209"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
-            landmarkType = "5">
+            startingLineNumber = "409"
+            endingLineNumber = "409">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -59,11 +43,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Meeting Tracker/Meeting.m"
-            timestampString = "405235426.52403"
+            timestampString = "405488674.691207"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "-removePersonsPresentAtIndexes:"
             landmarkType = "5">
          </BreakpointContent>

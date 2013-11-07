@@ -49,7 +49,7 @@ NSString *defaultHourlyRateKey = @"hourlyRate";
 - (NSNumberFormatter *)currencyFormatter
 {
     if (!_currencyFormatter) {
-        _currencyFormatter = [[[NSNumberFormatter alloc] init] retain];
+        _currencyFormatter = [[NSNumberFormatter alloc] init];
         [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     }
     return _currencyFormatter;

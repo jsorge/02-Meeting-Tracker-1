@@ -7,6 +7,7 @@
 
 
 #import "MeetingDocument.h"
+#import "JMSPreferencesWindowController.h"
 
 NSString *personNameKeyPath = @"name";
 NSString *personHourlyRateKeyPath = @"hourlyRate";
@@ -22,12 +23,13 @@ NSString *meetingTimeEndKeypath = @"endingTime";
 @property (assign) IBOutlet NSTextField *totalBillingRate_liveComputeField;
 @property (assign) IBOutlet NSButton *meetingTemplateButton;
 @property (assign) IBOutlet NSArrayController *meetingArrayController;
-@property (assign) IBOutlet NSTextField *totalBillingRateLabel_KVO;
+@property (assign) IBOutlet NSTableView *meetingTable;
 @end
 
 NSString *const captainMeeting = @"Captains";
 NSString *const marxMeeting = @"Marxes";
 NSString *const stoogesMeeting = @"Stooges";
+NSString *const simpsonsMeeting = @"Simpsons";
 NSString *const arrangedObjectsCountKey = @"@count.arrangedObjects";
 NSString *const arrangedObjectsHourlyRateKey = @"arrangedObjects.hourlyRate";
 
@@ -117,6 +119,8 @@ static void *documentContext;
         [self setMeeting:[Meeting meetingWithMarxBrothers]];
     } else if ( [sender.title isEqualToString:stoogesMeeting] ) {
         [self setMeeting:[Meeting meetingWithStooges]];
+    } else if ( [sender.title isEqualToString:simpsonsMeeting]) {
+        [self setMeeting:[Meeting meetingWithSimpsons]];
     }
 }
 
@@ -152,7 +156,7 @@ static void *documentContext;
 - (NSString *)drawRandomMeeting
 {
     NSString *meetingTitle = @"";
-    NSUInteger random = arc4random_uniform(3);
+    NSUInteger random = arc4random_uniform(4);
     switch (random) {
         case 0:
             meetingTitle = captainMeeting;
@@ -163,10 +167,19 @@ static void *documentContext;
         case 2:
             meetingTitle = stoogesMeeting;
             break;
+        case 3:
+            meetingTitle = simpsonsMeeting;
+            break;
         default:
             NSLog(@"No meeting was started because the random number was %lu", (unsigned long)random);
     }
     return meetingTitle;
+}
+
+- (void)changeTableColor:(id)sender
+{
+    NSColor *newBackgroundColor = [JMSPreferencesWindowController preferencesTableBackgroundColor];
+    self.meetingTable.backgroundColor = newBackgroundColor;
 }
 
 #pragma mark - NSWindowDelegate
@@ -203,6 +216,8 @@ static void *documentContext;
     [_meeting release];
     _meeting = nil;
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super dealloc];
 }
 
@@ -215,8 +230,12 @@ static void *documentContext;
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
+    self.meetingTable.backgroundColor = [JMSPreferencesWindowController preferencesTableBackgroundColor];
     [self startTimer];
-    [self startObservingMeeting:self.meeting];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeTableColor:)
+                                                 name:meetingTableColorChangeNotification
+                                               object:nil];
 }
 
 + (BOOL)autosavesInPlace
@@ -345,13 +364,42 @@ static void *documentContext;
 }
 
 #pragma mark - Menu Items
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-    BOOL shouldEnable = YES;
+    SEL action = [anItem action];
     
+    if (action == @selector(startMeetingButton:)) {
+        return self.meeting.canStart;
+    } else if ((action == @selector(resetWithMarxes:))
+               || (action == @selector(resetWithSimpsons:))
+               || (action == @selector(resetWithStooges:))
+               || (action == @selector(resetWithCaptains:))) {
+        return !(self.meeting.canStop);
+    } else if (action == @selector(endMeetingButton:)) {
+        return self.meeting.canStop;
+    }
     
-    
-    return shouldEnable;
+    return [super validateUserInterfaceItem:anItem];
+}
+
+- (IBAction)resetWithMarxes:(id)sender
+{
+    self.meeting = [Meeting meetingWithMarxBrothers];
+}
+
+- (IBAction)resetWithStooges:(id)sender
+{
+    self.meeting = [Meeting meetingWithStooges];
+}
+
+- (IBAction)resetWithSimpsons:(id)sender
+{
+    self.meeting = [Meeting meetingWithSimpsons];
+}
+
+- (IBAction)resetWithCaptains:(id)sender
+{
+    self.meeting = [Meeting meetingWithCaptains];
 }
 
 

@@ -64,7 +64,7 @@ NSString *const totalBillingRateString = @"totalBillingRate";
 - (NSNumberFormatter *)currencyFormatter
 {
     if (!_currencyFormatter) {
-        _currencyFormatter = [[[NSNumberFormatter alloc] init] retain];
+        _currencyFormatter = [[NSNumberFormatter alloc] init];
         [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     }
     return _currencyFormatter;
@@ -110,6 +110,21 @@ NSString *const totalBillingRateString = @"totalBillingRate";
     [marxBrosMeeting setPersonsPresent:[[marxBrothers mutableCopy] autorelease]];
     
     return marxBrosMeeting;
+}
+
++ (Meeting *)meetingWithSimpsons
+{
+    Person *homer = [Person personWithName:@"Homer" hourlyRate:@100];
+    Person *marge = [Person personWithName:@"Marge" hourlyRate:@125];
+    Person *bart = [Person personWithName:@"Bart" hourlyRate:@75];
+    Person *lisa = [Person personWithName:@"Lisa" hourlyRate:@45];
+    Person *maggie = [Person personWithName:@"Maggie" hourlyRate:@20];
+    NSArray *simpsons = @[homer, marge, bart, lisa, maggie];
+    
+    Meeting *simpsonsMeeting = [[[Meeting alloc] init] autorelease];
+    [simpsonsMeeting setPersonsPresent:[[simpsons mutableCopy] autorelease]];
+    
+    return simpsonsMeeting;
 }
 
 - (id)init
@@ -222,11 +237,20 @@ NSString *const totalBillingRateString = @"totalBillingRate";
 
 - (BOOL)canStart
 {
+    if ( self.startingTime && !self.endingTime ) {
+        return NO;
+    }
     return YES;
 }
 
 - (BOOL)canStop
 {
+    if (!self.startingTime) {
+        return NO;
+    } else if (self.startingTime && self.endingTime) {
+        return NO;
+    }
+    
     return YES;
 }
 

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "JMSPreferencesWindowController.h"
+#import "Person.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +17,16 @@
 @end
 
 @implementation AppDelegate
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [JMSPreferencesWindowController registerStandardDefaults];
+    }
+    return self;
+}
+
 #pragma mark - Properties
 - (JMSPreferencesWindowController *)preferencesWindow
 {

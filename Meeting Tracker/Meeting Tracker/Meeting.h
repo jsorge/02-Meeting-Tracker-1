@@ -29,6 +29,7 @@
 + (Meeting *)meetingWithStooges;
 + (Meeting *)meetingWithCaptains;
 + (Meeting *)meetingWithMarxBrothers;
++ (Meeting *)meetingWithSimpsons;
 
 #pragma mark - Other Public Methods
 - (void)addToPersonsPresent:(id)personsPresentObject;

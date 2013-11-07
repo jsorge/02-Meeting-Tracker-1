@@ -36,6 +36,10 @@ extern NSString *meetingTimeEndKeypath;
 - (IBAction)logParticipants:(id)sender;
 - (IBAction)startMeetingButton:(id)sender;
 - (IBAction)endMeetingButton:(id)sender;
+- (IBAction)resetWithMarxes:(id)sender;
+- (IBAction)resetWithStooges:(id)sender;
+- (IBAction)resetWithSimpsons:(id)sender;
+- (IBAction)resetWithCaptains:(id)sender;
 
 #pragma mark - Other Public Methods
 - (void)updateGUI:(NSTimer *)theTimer;

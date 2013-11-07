@@ -12,6 +12,7 @@
                 <outlet property="elapsedTimeLabel" destination="osc-dT-7Yd" id="XUe-Gv-5s3"/>
                 <outlet property="endMeetingButton" destination="CGB-92-Lzl" id="aI2-jb-zLL"/>
                 <outlet property="meetingArrayController" destination="SfF-lx-BgS" id="PxX-E9-xL7"/>
+                <outlet property="meetingTable" destination="bPQ-cd-kXD" id="7vP-6b-Rr8"/>
                 <outlet property="meetingTemplateButton" destination="qcQ-6m-TN4" id="Rsc-cB-Gg3"/>
                 <outlet property="startMeetingButton" destination="OD0-gJ-1KW" id="9Gx-l8-hH8"/>
                 <outlet property="timerLabel" destination="6eu-Qp-0pk" id="K8Z-mM-pMw"/>

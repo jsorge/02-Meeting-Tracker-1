@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class JMSPreferencesWindowController;
 
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (nonatomic, retain, readonly)JMSPreferencesWindowController *preferencesWindow;
