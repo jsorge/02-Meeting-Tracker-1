@@ -8,20 +8,23 @@
 
 #import "Person.h"
 
+NSString *defaultNameKey = @"name";
+NSString *defaultHourlyRateKey = @"hourlyRate";
+
 @implementation Person
 
 #pragma mark - Accessors
-- (NSString *)description;
+- (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ bills at %@", [self name], [[self currencyFormatter] stringFromNumber:[self hourlyRate]]];
 }
 
-- (NSString *)name;
+- (NSString *)name
 {
     return _name;
 }
 
-- (void)setName:(NSString *)aParticipantName;
+- (void)setName:(NSString *)aParticipantName
 {
     if (aParticipantName != _name) {
         [_name release];
@@ -29,12 +32,12 @@
     }
 }
 
-- (NSNumber *)hourlyRate;
+- (NSNumber *)hourlyRate
 {
     return _hourlyRate;
 }
 
-- (void)setHourlyRate:(NSNumber *)anHourlyRate;
+- (void)setHourlyRate:(NSNumber *)anHourlyRate
 {
     if (anHourlyRate != _hourlyRate) {
         [anHourlyRate retain];
@@ -46,14 +49,14 @@
 - (NSNumberFormatter *)currencyFormatter
 {
     if (!_currencyFormatter) {
-        _currencyFormatter = [[[NSNumberFormatter alloc] init] retain];
+        _currencyFormatter = [[NSNumberFormatter alloc] init];
         [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     }
     return _currencyFormatter;
 }
 
 #pragma mark - Constructors
-+ (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate;
++ (Person *)personWithName:(NSString *)name hourlyRate:(NSNumber *)rate
 {
     return [[[Person alloc] initWithName:name hourlyRate:rate] autorelease];
 }
@@ -68,11 +71,36 @@
     return self;
 }
 
+- (id)init
+{
+    NSString *defaultName = [[NSUserDefaults standardUserDefaults] stringForKey:defaultNameKey];
+    NSNumber *defaultRate = @([[NSUserDefaults standardUserDefaults] floatForKey:defaultHourlyRateKey]);
+    return [self initWithName:defaultName hourlyRate:defaultRate];
+}
+
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[self name] forKey:defaultNameKey];
+    [aCoder encodeObject:[self hourlyRate] forKey:defaultHourlyRateKey];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        [self setName:[aDecoder decodeObjectForKey:defaultNameKey]];
+        [self setHourlyRate:[aDecoder decodeObjectForKey:defaultHourlyRateKey]];
+    }
+    return self;
+}
+
 #pragma mark - Memory Management
 - (void)dealloc
 {
     [_name release];
     _name = nil;
+    
     
     [_hourlyRate release];
     _hourlyRate = nil;

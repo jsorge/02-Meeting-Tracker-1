@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Meeting : NSObject
+@interface Meeting : NSObject <NSCoding>
 {
     NSDate *_startingTime;
     NSDate *_endingTime;
@@ -29,17 +29,22 @@
 + (Meeting *)meetingWithStooges;
 + (Meeting *)meetingWithCaptains;
 + (Meeting *)meetingWithMarxBrothers;
++ (Meeting *)meetingWithSimpsons;
 
 #pragma mark - Other Public Methods
 - (void)addToPersonsPresent:(id)personsPresentObject;
 - (void)removeFromPersonsPresent:(id)personsPresentObject;
+- (void)removePersonsPresentAtIndexes:(NSIndexSet *)indexes;
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx;
 - (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx;
+- (void)insertPersonsPresent:(NSArray *)personsPresent atIndexes:(NSIndexSet *)indexes;
 - (NSUInteger)countOfPersonsPresent;
 - (NSUInteger)elapsedSeconds;
 - (double)elapsedHours;
 - (NSString *)elapsedTimeDisplayString;
 - (NSNumber *)accruedCost;
 - (NSNumber *)totalBillingRate;
+- (BOOL)canStart;
+- (BOOL)canStop;
 
 @end

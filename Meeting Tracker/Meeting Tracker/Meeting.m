@@ -9,20 +9,22 @@
 #import "Meeting.h"
 #import "Person.h"
 
+NSString *const totalBillingRateString = @"totalBillingRate";
+
 @implementation Meeting
 
 #pragma mark - Accessors
-- (NSString *)description;
+- (NSString *)description
 {
     return [NSString stringWithFormat:@"This is a meeting that started at %@ with %lu participants billing at %@/hour", [self startingTime], (unsigned long)[self countOfPersonsPresent], [[self currencyFormatter] stringFromNumber:[self totalBillingRate]]];
 }
 
-- (NSDate *)startingTime;
+- (NSDate *)startingTime
 {
     return _startingTime;
 }
 
-- (void)setStartingTime:(NSDate *)aStartingTime;
+- (void)setStartingTime:(NSDate *)aStartingTime
 {
     if (aStartingTime != _startingTime) {
         [aStartingTime retain];
@@ -31,12 +33,12 @@
     }
 }
 
-- (NSDate *)endingTime;
+- (NSDate *)endingTime
 {
     return _endingTime;
 }
 
-- (void)setEndingTime:(NSDate *)anEndingTime;
+- (void)setEndingTime:(NSDate *)anEndingTime
 {
     if (anEndingTime != _endingTime) {
         [anEndingTime retain];
@@ -45,12 +47,12 @@
     }
 }
 
-- (NSMutableArray *)personsPresent;
+- (NSMutableArray *)personsPresent
 {
     return _personsPresent;
 }
 
-- (void)setPersonsPresent:(NSMutableArray *)aPersonsPresent;
+- (void)setPersonsPresent:(NSMutableArray *)aPersonsPresent
 {
     if (aPersonsPresent != _personsPresent) {
         [aPersonsPresent retain];
@@ -62,14 +64,14 @@
 - (NSNumberFormatter *)currencyFormatter
 {
     if (!_currencyFormatter) {
-        _currencyFormatter = [[[NSNumberFormatter alloc] init] retain];
+        _currencyFormatter = [[NSNumberFormatter alloc] init];
         [_currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     }
     return _currencyFormatter;
 }
 
 #pragma mark - Constructors
-+ (Meeting *)meetingWithStooges;
++ (Meeting *)meetingWithStooges
 {
     Person *larry = [Person personWithName:@"Larry" hourlyRate:@20];
     Person *curly = [Person personWithName:@"Curly" hourlyRate:@25];
@@ -82,7 +84,7 @@
     return stoogeMeeting;
 }
 
-+ (Meeting *)meetingWithCaptains;
++ (Meeting *)meetingWithCaptains
 {
     Person *picard = [Person personWithName:@"Picard" hourlyRate:@250];
     Person *kirk = [Person personWithName:@"Kirk" hourlyRate:@400];
@@ -96,7 +98,7 @@
     return captainsMeeting;
 }
 
-+ (Meeting *)meetingWithMarxBrothers;
++ (Meeting *)meetingWithMarxBrothers
 {
     Person *harpo = [Person personWithName:@"Harpo" hourlyRate:@20];
     Person *groucho = [Person personWithName:@"Groucho" hourlyRate:@50];
@@ -110,6 +112,21 @@
     return marxBrosMeeting;
 }
 
++ (Meeting *)meetingWithSimpsons
+{
+    Person *homer = [Person personWithName:@"Homer" hourlyRate:@100];
+    Person *marge = [Person personWithName:@"Marge" hourlyRate:@125];
+    Person *bart = [Person personWithName:@"Bart" hourlyRate:@75];
+    Person *lisa = [Person personWithName:@"Lisa" hourlyRate:@45];
+    Person *maggie = [Person personWithName:@"Maggie" hourlyRate:@20];
+    NSArray *simpsons = @[homer, marge, bart, lisa, maggie];
+    
+    Meeting *simpsonsMeeting = [[[Meeting alloc] init] autorelease];
+    [simpsonsMeeting setPersonsPresent:[[simpsons mutableCopy] autorelease]];
+    
+    return simpsonsMeeting;
+}
+
 - (id)init
 {
     self = [super init];
@@ -120,32 +137,42 @@
 }
 
 #pragma mark - Other Public Methods
-- (void)addToPersonsPresent:(id)personsPresentObject;
+- (void)addToPersonsPresent:(id)personsPresentObject
 {
-    [_personsPresent addObject:personsPresentObject];
+    [[self personsPresent] addObject:personsPresentObject];
 }
 
-- (void)removeFromPersonsPresent:(id)personsPresentObject;
+- (void)removeFromPersonsPresent:(id)personsPresentObject
 {
-    [_personsPresent removeObject:personsPresentObject];
+    [[self personsPresent] removeObject:personsPresentObject];
 }
 
-- (NSUInteger)countOfPersonsPresent;
+- (void)removePersonsPresentAtIndexes:(NSIndexSet *)indexes
 {
-    return [_personsPresent count];
+    [[self personsPresent] removeObjectsAtIndexes:indexes];
 }
 
-- (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx;
+- (NSUInteger)countOfPersonsPresent
+{
+    return [[self personsPresent] count];
+}
+
+- (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx
 {
     [[self personsPresent] removeObjectAtIndex:idx];
 }
 
-- (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx;
+- (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx
 {
     [[self personsPresent] insertObject:anObject atIndex:idx];
 }
 
-- (NSUInteger)elapsedSeconds;
+- (void)insertPersonsPresent:(NSArray *)personsPresent atIndexes:(NSIndexSet *)indexes
+{
+    [[self personsPresent] insertObjects:personsPresent atIndexes:indexes];
+}
+
+- (NSUInteger)elapsedSeconds
 {
     NSDate *startingTime = [self startingTime];
     NSDate *endingTime;
@@ -158,14 +185,14 @@
     return timeSinceMeetingStarted;
 }
 
-- (double)elapsedHours;
+- (double)elapsedHours
 {
     double secondsGoneBy = [self elapsedSeconds];
     double hoursGoneBy = secondsGoneBy / 3600;
     return hoursGoneBy;
 }
 
-- (NSString *)elapsedTimeDisplayString;
+- (NSString *)elapsedTimeDisplayString
 {
     NSUInteger hours = 0;
     NSUInteger minutes = 0;
@@ -182,16 +209,21 @@
             seconds];
 }
 
-- (NSNumber *)accruedCost;
+- (NSNumber *)accruedCost
 {
-    double totalBillingRate = [[self totalBillingRate] doubleValue];
-    double elapsedHours = [self elapsedHours];
+    double totalBillingRate = 0;
+    double elapsedHours = 0;
+    
+    if ([self startingTime]) {
+        totalBillingRate = [[self totalBillingRate] doubleValue];
+        elapsedHours = [self elapsedHours];
+    }
     
     double totalCost = totalBillingRate * elapsedHours;
     return @(totalCost);
 }
 
-- (NSNumber *)totalBillingRate;
+- (NSNumber *)totalBillingRate
 {
     double totalRate = 0;
     
@@ -201,6 +233,44 @@
     }
     
     return @(totalRate);
+}
+
+- (BOOL)canStart
+{
+    if ( self.startingTime && !self.endingTime ) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)canStop
+{
+    if (!self.startingTime) {
+        return NO;
+    } else if (self.startingTime && self.endingTime) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[self startingTime] forKey:@"startingTime"];
+    [aCoder encodeObject:[self endingTime] forKey:@"endingTime"];
+    [aCoder encodeObject:[self personsPresent] forKey:@"personsPresent"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        [self setStartingTime:[aDecoder decodeObjectForKey:@"startingTime"]];
+        [self setEndingTime:[aDecoder decodeObjectForKey:@"endingTime"]];
+        [self setPersonsPresent:[aDecoder decodeObjectForKey:@"personsPresent"]];
+    }
+    return self;
 }
 
 #pragma mark - Memory Management

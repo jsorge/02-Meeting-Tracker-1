@@ -10,7 +10,13 @@
 #import "Meeting.h"
 #import "Person.h"
 
-@interface MeetingDocument : NSDocument <NSWindowDelegate>
+extern NSString *personNameKeyPath;
+extern NSString *personHourlyRateKeyPath;
+extern NSString *meetingPersonsPresentKeypath;
+extern NSString *meetingTimeStartKeypath;
+extern NSString *meetingTimeEndKeypath;
+
+@interface MeetingDocument : NSDocument <NSWindowDelegate, NSCoding>
 {
     Meeting *_meeting;
     NSTimer *_timer;
@@ -25,9 +31,17 @@
 - (void)setTimer:(NSTimer *)aTimer;
 
 
-#pragma mark - Other Public Methods
+#pragma mark - IBActions
 - (IBAction)logMeeting:(id)sender;
 - (IBAction)logParticipants:(id)sender;
+- (IBAction)startMeetingButton:(id)sender;
+- (IBAction)endMeetingButton:(id)sender;
+- (IBAction)resetWithMarxes:(id)sender;
+- (IBAction)resetWithStooges:(id)sender;
+- (IBAction)resetWithSimpsons:(id)sender;
+- (IBAction)resetWithCaptains:(id)sender;
+
+#pragma mark - Other Public Methods
 - (void)updateGUI:(NSTimer *)theTimer;
 
 @end
